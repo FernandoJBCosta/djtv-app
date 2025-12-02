@@ -62,8 +62,8 @@ const Categories = () => {
                 </span>
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                {category.videos.map((video) => (
-                  <VideoCard key={video.id} video={video} className="w-full" />
+                {category.videos.map((video, index) => (
+                  <VideoCard key={video.id} video={video} className="w-full" index={index} />
                 ))}
               </div>
             </section>

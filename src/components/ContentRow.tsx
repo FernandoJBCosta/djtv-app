@@ -48,8 +48,8 @@ export function ContentRow({ category, onPlay }: ContentRowProps) {
           ref={scrollRef}
           className="flex gap-4 overflow-x-auto scrollbar-hide px-4 md:px-8 pb-4"
         >
-          {category.videos.map((video) => (
-            <VideoCard key={video.id} video={video} onPlay={onPlay} />
+          {category.videos.map((video, index) => (
+            <VideoCard key={video.id} video={video} onPlay={onPlay} index={index} />
           ))}
         </div>
 
