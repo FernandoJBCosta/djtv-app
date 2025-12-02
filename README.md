@@ -71,3 +71,19 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+Setup (one-time):
+
+Export to GitHub via the "Export to GitHub" button, then clone locally
+Run npm install
+Run npm run build
+Add platforms: npx cap add ios and/or npx cap add android
+Run on device/emulator:
+
+iOS: npx cap run ios (requires Mac with Xcode)
+Android: npx cap run android (requires Android Studio)
+After making changes in Lovable:
+
+Git pull the latest code
+Run npx cap sync to update native projects
+For AppleTV & AndroidTV: These require additional platform-specific configuration in the native projects after initial setup - AppleTV needs tvOS target in Xcode, AndroidTV needs Leanback library configuration in Android Studio.
