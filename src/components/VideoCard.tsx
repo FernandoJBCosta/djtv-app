@@ -28,39 +28,51 @@ export function VideoCard({ video, onPlay, className }: VideoCardProps) {
       )}
       onClick={handleClick}
     >
-      {/* Thumbnail */}
-      <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-card">
+      {/* Thumbnail Container */}
+      <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-card transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] group-hover:-translate-y-2">
+        {/* Image */}
         <img
           src={video.thumbnail}
           alt={video.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
           loading="lazy"
         />
         
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
+        
+        {/* Glow Border Effect */}
+        <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-primary/50 transition-all duration-500" />
+        
+        {/* Shine Effect */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-tr from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%]" style={{ transition: 'transform 0.7s ease-out, opacity 0.3s ease-out' }} />
         
         {/* Play Button */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-[var(--shadow-glow)] transform scale-75 group-hover:scale-100 transition-transform duration-300">
-            <Play className="w-6 h-6 text-primary-foreground fill-current ml-1" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-[0_0_30px_rgba(var(--primary-rgb),0.5)] transform scale-0 group-hover:scale-100 transition-all duration-500 ease-out">
+            <Play className="w-7 h-7 text-primary-foreground fill-current ml-1" />
           </div>
         </div>
 
         {/* Duration Badge */}
         {video.duration && (
-          <div className="absolute bottom-2 right-2 bg-background/80 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-medium">
+          <div className="absolute bottom-3 right-3 bg-background/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold shadow-lg">
             {video.duration}
           </div>
         )}
+        
+        {/* Category Badge */}
+        <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-xs font-semibold text-primary-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0">
+          {video.category}
+        </div>
       </div>
 
       {/* Info */}
-      <div className="mt-3 px-1">
-        <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+      <div className="mt-4 px-1">
+        <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors duration-300">
           {video.title}
         </h3>
-        <p className="text-sm text-muted-foreground truncate mt-1">
+        <p className="text-sm text-muted-foreground truncate mt-1 group-hover:text-muted-foreground/80 transition-colors duration-300">
           {video.category}
         </p>
       </div>
