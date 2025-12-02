@@ -77,26 +77,49 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {menuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border animate-fade-up">
-          <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                onClick={() => setMenuOpen(false)}
-                className={cn(
-                  "transition-colors font-medium py-2",
-                  location.pathname === link.href ? "text-primary" : "text-foreground/80 hover:text-primary",
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        <div 
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setMenuOpen(false)}
+        />
       )}
+
+      {/* Mobile Menu Slide-in */}
+      <div 
+        className={cn(
+          "md:hidden fixed top-0 right-0 h-full w-64 bg-background/95 backdrop-blur-md border-l border-border z-50 transition-transform duration-300 ease-out",
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="flex justify-end p-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-foreground/80"
+            onClick={() => setMenuOpen(false)}
+          >
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
+        <nav className="px-6 py-4 flex flex-col gap-2">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              onClick={() => setMenuOpen(false)}
+              className={cn(
+                "transition-colors font-medium py-3 px-4 rounded-lg",
+                location.pathname === link.href 
+                  ? "text-primary bg-primary/10" 
+                  : "text-foreground/80 hover:text-primary hover:bg-muted"
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
 
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
