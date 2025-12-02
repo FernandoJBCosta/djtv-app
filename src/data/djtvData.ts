@@ -1,0 +1,73 @@
+import { Category, CarouselItem } from "@/types/video";
+
+export const carouselItems: CarouselItem[] = [
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel0.png", width: 1740, height: 500 },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel1.png", width: 1740, height: 500 },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel2.png", width: 1740, height: 500 },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel3.png", width: 1740, height: 500 },
+];
+
+export const categories: Category[] = [
+  {
+    id: "house",
+    name: "HOUSE",
+    videos: [
+      { id: "house-1", title: "Luis Leite", description: "Luis Leite - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_001.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-2", title: "Di-Light", description: "Di-Light - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_004.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-3", title: "Morgana", description: "Morgana - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_005.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-4", title: "Dextro", description: "Dextro - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_008.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-5", title: "Paulo Leite", description: "Paulo Leite - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_010.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-6", title: "Paulo Moreno", description: "Paulo Moreno - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_014.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-7", title: "Di Paul", description: "Di Paul - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_015.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-8", title: "Andy Phill", description: "Andy Phill - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_016.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-9", title: "Pedro Filipe", description: "Pedro Filipe - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_017.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-10", title: "Mário Roque", description: "Mário Roque - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_022.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-11", title: "Nuno da Silva", description: "Nuno da Silva - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_029.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-12", title: "Nox", description: "Nox - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_031.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-13", title: "Lust", description: "Lust - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_033.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-14", title: "Chadubritt", description: "Chadubritt - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_034.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-15", title: "Hynka", description: "Hynka - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_036.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-16", title: "The Slum Vagabunds", description: "The Slum Vagabunds - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_040.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-17", title: "BoraLá", description: "BoraLá - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_041.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-18", title: "MassiveDrum", description: "MassiveDrum - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_044.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-19", title: "Daveed", description: "Daveed - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_046.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+      { id: "house-20", title: "Géninho", description: "Géninho - HOUSE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_049.jpg", videoUrl: "", duration: "", category: "HOUSE" },
+    ],
+  },
+  {
+    id: "techno",
+    name: "TECHNO",
+    videos: [
+      { id: "techno-1", title: "D.Noyse", description: "D.Noyse - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_002.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-2", title: "X-Pose", description: "X-Pose - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_003.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-3", title: "DKult", description: "DKult - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_006.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-4", title: "P!PA", description: "P!PA - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_007.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-5", title: "A.Paul", description: "A.Paul - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_009.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-6", title: "Wögz", description: "Wögz - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_012.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-7", title: "Cardao", description: "Cardao - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_013.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-8", title: "Ze Mig-L", description: "Ze Mig-L - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_019.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-9", title: "Marques Oliver", description: "Marques Oliver - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_020.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-10", title: "Asotto", description: "Asotto - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_023.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-11", title: "Aruzda", description: "Aruzda - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_024.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-12", title: "The Fox", description: "The Fox - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_027.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-13", title: "Ghost", description: "Ghost - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_028.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-14", title: "MEM", description: "MEM - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_030.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-15", title: "Ninna V", description: "Ninna V - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_035.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-16", title: "Pierresat", description: "Pierresat - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_038.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-17", title: "Pedro Walter", description: "Pedro Walter - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_042.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+      { id: "techno-18", title: "Moka", description: "Moka - TECHNO", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_048.jpg", videoUrl: "", duration: "", category: "TECHNO" },
+    ],
+  },
+  {
+    id: "trance",
+    name: "TRANCE",
+    videos: [
+      { id: "trance-1", title: "Dazzle Beat", description: "Dazzle Beat - TRANCE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_018.jpg", videoUrl: "", duration: "", category: "TRANCE" },
+      { id: "trance-2", title: "Raul Mendes", description: "Raul Mendes - TRANCE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_021.jpg", videoUrl: "", duration: "", category: "TRANCE" },
+      { id: "trance-3", title: "Pedro Carrilho", description: "Pedro Carrilho - TRANCE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_025.jpg", videoUrl: "", duration: "", category: "TRANCE" },
+      { id: "trance-4", title: "Tiago Starr", description: "Tiago Starr - TRANCE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_026.jpg", videoUrl: "", duration: "", category: "TRANCE" },
+      { id: "trance-5", title: "Joana Trindade", description: "Joana Trindade - TRANCE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_032.jpg", videoUrl: "", duration: "", category: "TRANCE" },
+      { id: "trance-6", title: "Nectarios", description: "Nectarios - TRANCE", thumbnail: "https://app.djtv.pt/resources/images/lockups/CARA_037.jpg", videoUrl: "", duration: "", category: "TRANCE" },
+    ],
+  },
+];

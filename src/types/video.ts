@@ -8,6 +8,13 @@ export interface Video {
   category: string;
   year?: string;
   rating?: string;
+  documentUrl?: string;
+}
+
+export interface CarouselItem {
+  src: string;
+  width: number;
+  height: number;
 }
 
 export interface Category {
