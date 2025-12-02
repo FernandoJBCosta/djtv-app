@@ -4,10 +4,12 @@ import { Search, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import djtvLogo from "@/assets/djtv-logo.png";
+import { SearchModal } from "./SearchModal";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -57,7 +59,12 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-primary">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-foreground/80 hover:text-primary"
+              onClick={() => setSearchOpen(true)}
+            >
               <Search className="w-5 h-5" />
             </Button>
             <Button
@@ -92,6 +99,8 @@ export function Header() {
           </nav>
         </div>
       )}
+
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }
