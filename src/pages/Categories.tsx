@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { VideoCard } from "@/components/VideoCard";
+import { VideoCardSkeletonGrid } from "@/components/VideoCardSkeleton";
 import { categories } from "@/data/djtvData";
 import { cn } from "@/lib/utils";
 
 const Categories = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredCategories = activeCategory
     ? categories.filter((cat) => cat.id === activeCategory)
@@ -53,21 +61,37 @@ const Categories = () => {
           </div>
 
           {/* Categories Grid */}
-          {filteredCategories.map((category) => (
-            <section key={category.id} className="mb-12">
-              <h2 className="font-display text-2xl md:text-3xl mb-6 flex items-center gap-3">
-                {category.name}
-                <span className="text-sm font-normal text-muted-foreground bg-card px-3 py-1 rounded-full">
-                  {category.videos.length} DJs
-                </span>
-              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                {category.videos.map((video, index) => (
-                  <VideoCard key={video.id} video={video} className="w-full" index={index} />
-                ))}
-              </div>
-            </section>
-          ))}
+          {isLoading ? (
+            // Skeleton loading state
+            <>
+              {filteredCategories.map((category) => (
+                <section key={category.id} className="mb-12">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="h-8 bg-card rounded-md w-32 animate-pulse" />
+                    <div className="h-6 bg-card rounded-full w-16 animate-pulse" />
+                  </div>
+                  <VideoCardSkeletonGrid count={category.videos.length} />
+                </section>
+              ))}
+            </>
+          ) : (
+            // Actual content
+            filteredCategories.map((category) => (
+              <section key={category.id} className="mb-12">
+                <h2 className="font-display text-2xl md:text-3xl mb-6 flex items-center gap-3">
+                  {category.name}
+                  <span className="text-sm font-normal text-muted-foreground bg-card px-3 py-1 rounded-full">
+                    {category.videos.length} DJs
+                  </span>
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                  {category.videos.map((video, index) => (
+                    <VideoCard key={video.id} video={video} className="w-full" index={index} />
+                  ))}
+                </div>
+              </section>
+            ))
+          )}
         </div>
       </main>
     </div>
