@@ -1,12 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { ContentRow } from "@/components/ContentRow";
+import { VideoPlayer } from "@/components/VideoPlayer";
+import { featuredVideo, categories } from "@/data/mockVideos";
+import { Video } from "@/types/video";
 
 const Index = () => {
+  const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
+
+  const handlePlay = (video: Video) => {
+    setCurrentVideo(video);
+  };
+
+  const handleClose = () => {
+    setCurrentVideo(null);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main>
+        <Hero video={featuredVideo} onPlay={handlePlay} />
+        
+        <div className="-mt-32 relative z-10 pb-20">
+          {categories.map((category) => (
+            <ContentRow
+              key={category.id}
+              category={category}
+              onPlay={handlePlay}
+            />
+          ))}
+        </div>
+      </main>
+
+      {/* Video Player Modal */}
+      {currentVideo && (
+        <VideoPlayer video={currentVideo} onClose={handleClose} />
+      )}
     </div>
   );
 };
