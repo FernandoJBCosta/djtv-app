@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
   <!-- Carousel Section - Banner images for the homepage hero -->
+  <!-- videourl: Optional - links banner to a video player page -->
+  <!-- islive: Optional - marks this as a live stream banner -->
   <carousel>
     <section>
-      <lockup>
+      <lockup islive="true">
+        <img src="https://example.com/banners/live-banner.jpg" width="1740" height="500" />
+      </lockup>
+      <lockup videourl="https://example.com/videos/featured1.m3u8" videoid="featured-1">
         <img src="https://example.com/banners/banner1.jpg" width="1740" height="500" />
       </lockup>
-      <lockup>
+      <lockup videourl="https://example.com/videos/featured2.m3u8" videoid="featured-2">
         <img src="https://example.com/banners/banner2.jpg" width="1740" height="500" />
       </lockup>
       <lockup>
@@ -16,27 +21,32 @@
   </carousel>
 
   <!-- Category 1: Featured Sets -->
+  <!-- Each lockup can have: videourl (HLS stream), videoid (unique ID), duration -->
   <separator>
     <button documenturl="/pages/featured.xml">
       <text>Featured Sets</text>
     </button>
   </separator>
   <shelf>
-    <lockup>
+    <lockup videourl="https://example.com/videos/dj1.m3u8" videoid="dj-set-1" duration="1:45:30">
       <img src="https://example.com/thumbnails/dj1.jpg" width="400" height="225" />
       <title>DJ Set Live at Club XYZ</title>
+      <description>Amazing live performance from the legendary Club XYZ</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/dj2.m3u8" videoid="dj-set-2" duration="2:00:00">
       <img src="https://example.com/thumbnails/dj2.jpg" width="400" height="225" />
       <title>Summer Festival Mix 2024</title>
+      <description>The best moments from Summer Festival 2024</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/dj3.m3u8" videoid="dj-set-3" duration="1:30:00">
       <img src="https://example.com/thumbnails/dj3.jpg" width="400" height="225" />
       <title>Deep House Session</title>
+      <description>Smooth deep house vibes for your soul</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/dj4.m3u8" videoid="dj-set-4" duration="1:15:00">
       <img src="https://example.com/thumbnails/dj4.jpg" width="400" height="225" />
       <title>Techno Underground</title>
+      <description>Raw underground techno from Berlin</description>
     </lockup>
   </shelf>
 
@@ -47,17 +57,20 @@
     </button>
   </separator>
   <shelf>
-    <lockup>
+    <lockup videourl="https://example.com/videos/new1.m3u8" videoid="new-1" duration="1:20:00">
       <img src="https://example.com/thumbnails/new1.jpg" width="400" height="225" />
       <title>Fresh Beats Vol. 1</title>
+      <description>Brand new beats fresh out the studio</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/new2.m3u8" videoid="new-2" duration="1:45:00">
       <img src="https://example.com/thumbnails/new2.jpg" width="400" height="225" />
       <title>Midnight Grooves</title>
+      <description>Late night grooves for the after hours</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/new3.m3u8" videoid="new-3" duration="2:10:00">
       <img src="https://example.com/thumbnails/new3.jpg" width="400" height="225" />
       <title>Electronic Dreams</title>
+      <description>A journey through electronic soundscapes</description>
     </lockup>
   </shelf>
 
@@ -68,25 +81,30 @@
     </button>
   </separator>
   <shelf>
-    <lockup>
+    <lockup videourl="https://example.com/videos/house1.m3u8" videoid="house-1" duration="1:30:00">
       <img src="https://example.com/thumbnails/house1.jpg" width="400" height="225" />
       <title>Classic House Anthems</title>
+      <description>Timeless house classics that never get old</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/house2.m3u8" videoid="house-2" duration="1:55:00">
       <img src="https://example.com/thumbnails/house2.jpg" width="400" height="225" />
       <title>Ibiza Sunset Mix</title>
+      <description>Sunset vibes from the White Isle</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/house3.m3u8" videoid="house-3" duration="1:40:00">
       <img src="https://example.com/thumbnails/house3.jpg" width="400" height="225" />
       <title>Soulful House Journey</title>
+      <description>Soulful vocals and deep basslines</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/house4.m3u8" videoid="house-4" duration="2:00:00">
       <img src="https://example.com/thumbnails/house4.jpg" width="400" height="225" />
       <title>Tech House Warehouse</title>
+      <description>Hard hitting tech house for the warehouse</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/house5.m3u8" videoid="house-5" duration="1:25:00">
       <img src="https://example.com/thumbnails/house5.jpg" width="400" height="225" />
       <title>Deep Disco Funk</title>
+      <description>Disco infused deep house grooves</description>
     </lockup>
   </shelf>
 
@@ -97,17 +115,20 @@
     </button>
   </separator>
   <shelf>
-    <lockup>
+    <lockup videourl="https://example.com/videos/techno1.m3u8" videoid="techno-1" duration="2:30:00">
       <img src="https://example.com/thumbnails/techno1.jpg" width="400" height="225" />
       <title>Berlin Nights</title>
+      <description>The sound of Berlin underground clubs</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/techno2.m3u8" videoid="techno-2" duration="1:50:00">
       <img src="https://example.com/thumbnails/techno2.jpg" width="400" height="225" />
       <title>Industrial Revolution</title>
+      <description>Hard industrial techno for the brave</description>
     </lockup>
-    <lockup>
+    <lockup videourl="https://example.com/videos/techno3.m3u8" videoid="techno-3" duration="2:15:00">
       <img src="https://example.com/thumbnails/techno3.jpg" width="400" height="225" />
       <title>Dark Warehouse Sessions</title>
+      <description>Dark and hypnotic warehouse techno</description>
     </lockup>
   </shelf>
 

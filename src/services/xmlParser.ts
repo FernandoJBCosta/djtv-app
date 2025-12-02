@@ -1,12 +1,6 @@
-import { Category, Video } from "@/types/video";
+import { Category, Video, CarouselItem } from "@/types/video";
 
 const BASE_URL = "https://app.djtv.pt";
-
-interface CarouselItem {
-  src: string;
-  width: number;
-  height: number;
-}
 
 interface ParsedData {
   carousel: CarouselItem[];
@@ -39,10 +33,17 @@ function parseXMLDocument(xmlDoc: Document): ParsedData {
     lockups.forEach((lockup) => {
       const img = lockup.querySelector("img");
       if (img) {
+        const isLive = lockup.getAttribute("islive") === "true";
+        const videoUrl = lockup.getAttribute("videourl") || undefined;
+        const videoId = lockup.getAttribute("videoid") || undefined;
+        
         carousel.push({
           src: img.getAttribute("src") || "",
           width: parseInt(img.getAttribute("width") || "1740"),
           height: parseInt(img.getAttribute("height") || "500"),
+          isLive,
+          videoUrl,
+          videoId,
         });
       }
     });
@@ -65,15 +66,19 @@ function parseXMLDocument(xmlDoc: Document): ParsedData {
       lockups.forEach((lockup, lockupIndex) => {
         const img = lockup.querySelector("img");
         const title = lockup.querySelector("title")?.textContent || "";
+        const description = lockup.querySelector("description")?.textContent || `${title} - ${categoryName}`;
+        const videoUrl = lockup.getAttribute("videourl") || "";
+        const videoId = lockup.getAttribute("videoid") || `${categoryName.toLowerCase()}-${lockupIndex}`;
+        const duration = lockup.getAttribute("duration") || "";
         
         if (img && title) {
           videos.push({
-            id: `${categoryName.toLowerCase()}-${lockupIndex}`,
+            id: videoId,
             title: title,
-            description: `${title} - ${categoryName}`,
+            description: description,
             thumbnail: img.getAttribute("src") || "",
-            videoUrl: "", // Will be populated from detail page
-            duration: "",
+            videoUrl: videoUrl,
+            duration: duration,
             category: categoryName,
             documentUrl: documentUrl,
           });
