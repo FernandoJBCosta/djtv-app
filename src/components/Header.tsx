@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Search, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -7,6 +8,7 @@ import djtvLogo from "@/assets/djtv-logo.png";
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +17,13 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/live", label: "Live" },
+    { href: "/categories", label: "Categories" },
+    { href: "/my-list", label: "My List" },
+  ];
 
   return (
     <header
@@ -26,24 +35,26 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <img src={djtvLogo} alt="DJTV" className="h-10 md:h-12 w-auto" />
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium">
-              Home
-            </a>
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium">
-              Live
-            </a>
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium">
-              Categories
-            </a>
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium">
-              My List
-            </a>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={cn(
+                  "transition-colors font-medium",
+                  location.pathname === link.href
+                    ? "text-primary"
+                    : "text-foreground/80 hover:text-primary"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Actions */}
@@ -67,18 +78,21 @@ export function Header() {
       {menuOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border animate-fade-up">
           <nav className="container mx-auto px-4 py-6 flex flex-col gap-4">
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
-              Home
-            </a>
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
-              Live
-            </a>
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
-              Categories
-            </a>
-            <a href="#" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
-              My List
-            </a>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setMenuOpen(false)}
+                className={cn(
+                  "transition-colors font-medium py-2",
+                  location.pathname === link.href
+                    ? "text-primary"
+                    : "text-foreground/80 hover:text-primary"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
         </div>
       )}
