@@ -29,14 +29,14 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled ? "bg-background/95 backdrop-blur-md" : "bg-gradient-to-b from-background/80 to-transparent"
+        scrolled ? "bg-background/95 backdrop-blur-md" : "bg-gradient-to-b from-background/80 to-transparent",
       )}
     >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <img src={djtvLogo} alt="DJTV" className="h-10 md:h-12 w-auto" />
+            <img src={djtvLogo} alt="DJTV" className="h-20 md:h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -47,9 +47,7 @@ export function Header() {
                 to={link.href}
                 className={cn(
                   "transition-colors font-medium",
-                  location.pathname === link.href
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
+                  location.pathname === link.href ? "text-primary" : "text-foreground/80 hover:text-primary",
                 )}
               >
                 {link.label}
@@ -85,9 +83,7 @@ export function Header() {
                 onClick={() => setMenuOpen(false)}
                 className={cn(
                   "transition-colors font-medium py-2",
-                  location.pathname === link.href
-                    ? "text-primary"
-                    : "text-foreground/80 hover:text-primary"
+                  location.pathname === link.href ? "text-primary" : "text-foreground/80 hover:text-primary",
                 )}
               >
                 {link.label}
