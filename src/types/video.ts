@@ -16,6 +16,7 @@ export interface CarouselItem {
   width: number;
   height: number;
   videoId?: string;
+  isLive?: boolean;
 }
 
 export interface Category {

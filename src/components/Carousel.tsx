@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Radio, Disc3 } from "lucide-react";
 import { Button } from "./ui/button";
 import { CarouselItem } from "@/types/video";
 
@@ -31,7 +31,9 @@ export function Carousel({ items }: CarouselProps) {
   };
 
   const handleBannerClick = (item: CarouselItem) => {
-    if (item.videoId) {
+    if (item.isLive) {
+      navigate("/live");
+    } else if (item.videoId) {
       navigate(`/dj/${item.videoId}`);
     }
   };
@@ -46,7 +48,7 @@ export function Carousel({ items }: CarouselProps) {
           key={index}
           className={`absolute inset-0 transition-opacity duration-700 ${
             index === currentIndex ? "opacity-100" : "opacity-0"
-          } ${item.videoId ? "cursor-pointer" : ""}`}
+          } ${item.videoId || item.isLive ? "cursor-pointer" : ""}`}
           onClick={() => index === currentIndex && handleBannerClick(item)}
         >
           <img
@@ -55,6 +57,59 @@ export function Carousel({ items }: CarouselProps) {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
+          
+          {/* Live Overlay */}
+          {item.isLive && (
+            <>
+              {/* Red gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-red-950/70 via-red-900/40 to-red-950/70" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+              
+              {/* Animated pulse effect */}
+              <div className="absolute inset-0 bg-red-500/10 animate-pulse" />
+              
+              {/* Floating icons */}
+              <div className="absolute inset-0 overflow-hidden">
+                <Disc3 className="absolute left-[5%] top-[30%] w-16 h-16 text-red-500/30 animate-spin" style={{ animationDuration: '10s' }} />
+                <Disc3 className="absolute right-[5%] top-[40%] w-20 h-20 text-primary/20 animate-spin" style={{ animationDuration: '8s', animationDirection: 'reverse' }} />
+                <Disc3 className="absolute left-[15%] bottom-[30%] w-12 h-12 text-red-500/20 animate-spin" style={{ animationDuration: '12s' }} />
+                <Disc3 className="absolute right-[15%] bottom-[25%] w-14 h-14 text-primary/25 animate-spin" style={{ animationDuration: '9s', animationDirection: 'reverse' }} />
+              </div>
+              
+              {/* Live content */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+                {/* Live indicator */}
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="relative flex h-4 w-4">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></span>
+                  </span>
+                  <span className="text-red-500 font-bold text-lg uppercase tracking-wider drop-shadow-[0_0_10px_rgba(239,68,68,0.6)]">
+                    Live Now
+                  </span>
+                </div>
+                
+                {/* Title */}
+                <div className="flex items-center gap-4 mb-6">
+                  <Radio className="w-10 h-10 text-red-500 animate-pulse" />
+                  <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground drop-shadow-lg">
+                    WATCH LIVE DJ SETS
+                  </h2>
+                  <Radio className="w-10 h-10 text-red-500 animate-pulse" />
+                </div>
+                
+                {/* CTA */}
+                <div className="flex items-center gap-2 text-foreground/80 text-lg">
+                  <span>Click to watch</span>
+                  <span className="text-red-500 animate-bounce">→</span>
+                </div>
+              </div>
+              
+              {/* Glow lines */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+            </>
+          )}
         </div>
       ))}
 
@@ -78,12 +133,14 @@ export function Carousel({ items }: CarouselProps) {
 
       {/* Indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {items.map((_, index) => (
+        {items.map((item, index) => (
           <button
             key={index}
             className={`w-2 h-2 rounded-full transition-all ${
               index === currentIndex
-                ? "bg-primary w-8"
+                ? item.isLive 
+                  ? "bg-red-500 w-8 shadow-[0_0_10px_rgba(239,68,68,0.6)]"
+                  : "bg-primary w-8"
                 : "bg-foreground/50 hover:bg-foreground/70"
             }`}
             onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); }}
