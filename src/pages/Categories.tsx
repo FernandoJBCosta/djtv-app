@@ -1,22 +1,11 @@
 import { useState } from "react";
 import { Header } from "@/components/Header";
 import { VideoCard } from "@/components/VideoCard";
-import { VideoPlayer } from "@/components/VideoPlayer";
 import { categories } from "@/data/djtvData";
-import { Video } from "@/types/video";
 import { cn } from "@/lib/utils";
 
 const Categories = () => {
-  const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
-  const handlePlay = (video: Video) => {
-    setCurrentVideo(video);
-  };
-
-  const handleClose = () => {
-    setCurrentVideo(null);
-  };
 
   const filteredCategories = activeCategory
     ? categories.filter((cat) => cat.id === activeCategory)
@@ -74,17 +63,13 @@ const Categories = () => {
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                 {category.videos.map((video) => (
-                  <VideoCard key={video.id} video={video} onPlay={handlePlay} />
+                  <VideoCard key={video.id} video={video} className="w-full" />
                 ))}
               </div>
             </section>
           ))}
         </div>
       </main>
-
-      {currentVideo && (
-        <VideoPlayer video={currentVideo} onClose={handleClose} />
-      )}
     </div>
   );
 };

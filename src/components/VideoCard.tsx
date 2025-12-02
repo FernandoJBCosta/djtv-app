@@ -1,24 +1,35 @@
 import { Play } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Video } from "@/types/video";
 import { cn } from "@/lib/utils";
 
 interface VideoCardProps {
   video: Video;
-  onPlay: (video: Video) => void;
+  onPlay?: (video: Video) => void;
   className?: string;
 }
 
 export function VideoCard({ video, onPlay, className }: VideoCardProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (onPlay) {
+      onPlay(video);
+    } else {
+      navigate(`/dj/${video.id}`);
+    }
+  };
+
   return (
     <div
       className={cn(
         "group relative flex-shrink-0 w-[280px] md:w-[320px] cursor-pointer",
         className
       )}
-      onClick={() => onPlay(video)}
+      onClick={handleClick}
     >
       {/* Thumbnail */}
-      <div className="relative aspect-video rounded-lg overflow-hidden bg-card">
+      <div className="relative aspect-square rounded-lg overflow-hidden bg-card">
         <img
           src={video.thumbnail}
           alt={video.title}
@@ -37,9 +48,11 @@ export function VideoCard({ video, onPlay, className }: VideoCardProps) {
         </div>
 
         {/* Duration Badge */}
-        <div className="absolute bottom-2 right-2 bg-background/80 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-medium">
-          {video.duration}
-        </div>
+        {video.duration && (
+          <div className="absolute bottom-2 right-2 bg-background/80 backdrop-blur-sm px-2 py-0.5 rounded text-xs font-medium">
+            {video.duration}
+          </div>
+        )}
       </div>
 
       {/* Info */}
@@ -48,7 +61,7 @@ export function VideoCard({ video, onPlay, className }: VideoCardProps) {
           {video.title}
         </h3>
         <p className="text-sm text-muted-foreground truncate mt-1">
-          {video.description}
+          {video.category}
         </p>
       </div>
     </div>
