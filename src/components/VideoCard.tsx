@@ -23,13 +23,13 @@ export function VideoCard({ video, onPlay, className }: VideoCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] cursor-pointer",
+        "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] cursor-pointer pt-3",
         className
       )}
       onClick={handleClick}
     >
       {/* Thumbnail Container */}
-      <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-card transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] group-hover:-translate-y-2">
+      <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-card transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] group-hover:-translate-y-3">
         {/* Image */}
         <img
           src={video.thumbnail}
