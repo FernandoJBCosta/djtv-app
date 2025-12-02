@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
+import { Carousel } from "@/components/Carousel";
 import { ContentRow } from "@/components/ContentRow";
 import { VideoPlayer } from "@/components/VideoPlayer";
-import { featuredVideo, categories } from "@/data/mockVideos";
+import { carouselItems, categories } from "@/data/djtvData";
 import { Video } from "@/types/video";
 
 const Index = () => {
@@ -22,9 +22,9 @@ const Index = () => {
       <Header />
       
       <main>
-        <Hero video={featuredVideo} onPlay={handlePlay} />
+        <Carousel items={carouselItems} />
         
-        <div className="-mt-32 relative z-10 pb-20">
+        <div className="relative z-10 pb-20">
           {categories.map((category) => (
             <ContentRow
               key={category.id}
@@ -35,7 +35,6 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Video Player Modal */}
       {currentVideo && (
         <VideoPlayer video={currentVideo} onClose={handleClose} />
       )}
