@@ -32,12 +32,12 @@ export function ContentRow({ category, onPlay }: ContentRowProps) {
       </div>
 
       {/* Scroll Container */}
-      <div className="relative group">
+      <div className="relative group/row">
         {/* Left Arrow */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 h-full rounded-none bg-gradient-to-r from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 h-full rounded-none bg-gradient-to-r from-background/80 to-transparent opacity-0 group-hover/row:opacity-100 transition-opacity"
           onClick={() => scroll("left")}
         >
           <ChevronLeft className="w-8 h-8" />
@@ -57,7 +57,7 @@ export function ContentRow({ category, onPlay }: ContentRowProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 h-full rounded-none bg-gradient-to-l from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 h-full rounded-none bg-gradient-to-l from-background/80 to-transparent opacity-0 group-hover/row:opacity-100 transition-opacity"
           onClick={() => scroll("right")}
         >
           <ChevronRight className="w-8 h-8" />
