@@ -35,8 +35,8 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <img src={djtvLogo} alt="DJTV" className="h-20 md:h-20 w-auto" />
+          <Link to="/" className="flex items-center">
+            <img src={djtvLogo} alt="DJTV" className="h-10 sm:h-12 md:h-14 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
