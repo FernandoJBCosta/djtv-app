@@ -36,7 +36,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <img src={djtvLogo} alt="DJTV" className="h-20 md:h-12 w-auto" />
+            <img src={djtvLogo} alt="DJTV" className="h-20 md:h-20 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
