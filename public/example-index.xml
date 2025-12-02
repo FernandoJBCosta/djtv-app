@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <!-- Carousel Section - Banner images for the homepage hero -->
+  <carousel>
+    <section>
+      <lockup>
+        <img src="https://example.com/banners/banner1.jpg" width="1740" height="500" />
+      </lockup>
+      <lockup>
+        <img src="https://example.com/banners/banner2.jpg" width="1740" height="500" />
+      </lockup>
+      <lockup>
+        <img src="https://example.com/banners/banner3.jpg" width="1740" height="500" />
+      </lockup>
+    </section>
+  </carousel>
+
+  <!-- Category 1: Featured Sets -->
+  <separator>
+    <button documenturl="/pages/featured.xml">
+      <text>Featured Sets</text>
+    </button>
+  </separator>
+  <shelf>
+    <lockup>
+      <img src="https://example.com/thumbnails/dj1.jpg" width="400" height="225" />
+      <title>DJ Set Live at Club XYZ</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/dj2.jpg" width="400" height="225" />
+      <title>Summer Festival Mix 2024</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/dj3.jpg" width="400" height="225" />
+      <title>Deep House Session</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/dj4.jpg" width="400" height="225" />
+      <title>Techno Underground</title>
+    </lockup>
+  </shelf>
+
+  <!-- Category 2: New Releases -->
+  <separator>
+    <button documenturl="/pages/new-releases.xml">
+      <text>New Releases</text>
+    </button>
+  </separator>
+  <shelf>
+    <lockup>
+      <img src="https://example.com/thumbnails/new1.jpg" width="400" height="225" />
+      <title>Fresh Beats Vol. 1</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/new2.jpg" width="400" height="225" />
+      <title>Midnight Grooves</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/new3.jpg" width="400" height="225" />
+      <title>Electronic Dreams</title>
+    </lockup>
+  </shelf>
+
+  <!-- Category 3: House Music -->
+  <separator>
+    <button documenturl="/pages/house.xml">
+      <text>House Music</text>
+    </button>
+  </separator>
+  <shelf>
+    <lockup>
+      <img src="https://example.com/thumbnails/house1.jpg" width="400" height="225" />
+      <title>Classic House Anthems</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/house2.jpg" width="400" height="225" />
+      <title>Ibiza Sunset Mix</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/house3.jpg" width="400" height="225" />
+      <title>Soulful House Journey</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/house4.jpg" width="400" height="225" />
+      <title>Tech House Warehouse</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/house5.jpg" width="400" height="225" />
+      <title>Deep Disco Funk</title>
+    </lockup>
+  </shelf>
+
+  <!-- Category 4: Techno -->
+  <separator>
+    <button documenturl="/pages/techno.xml">
+      <text>Techno</text>
+    </button>
+  </separator>
+  <shelf>
+    <lockup>
+      <img src="https://example.com/thumbnails/techno1.jpg" width="400" height="225" />
+      <title>Berlin Nights</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/techno2.jpg" width="400" height="225" />
+      <title>Industrial Revolution</title>
+    </lockup>
+    <lockup>
+      <img src="https://example.com/thumbnails/techno3.jpg" width="400" height="225" />
+      <title>Dark Warehouse Sessions</title>
+    </lockup>
+  </shelf>
+
+</document>
