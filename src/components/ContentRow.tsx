@@ -6,7 +6,7 @@ import { Category, Video } from "@/types/video";
 
 interface ContentRowProps {
   category: Category;
-  onPlay: (video: Video) => void;
+  onPlay?: (video: Video) => void;
 }
 
 export function ContentRow({ category, onPlay }: ContentRowProps) {
