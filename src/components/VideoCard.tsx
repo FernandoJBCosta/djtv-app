@@ -7,9 +7,10 @@ interface VideoCardProps {
   video: Video;
   onPlay?: (video: Video) => void;
   className?: string;
+  index?: number;
 }
 
-export function VideoCard({ video, onPlay, className }: VideoCardProps) {
+export function VideoCard({ video, onPlay, className, index = 0 }: VideoCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -20,12 +21,17 @@ export function VideoCard({ video, onPlay, className }: VideoCardProps) {
     }
   };
 
+  // Cap delay at 600ms for smoother UX
+  const animationDelay = Math.min(index * 75, 600);
+
   return (
     <div
       className={cn(
         "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] cursor-pointer pt-3",
+        "opacity-0 animate-[fade-in-up_0.5s_ease-out_forwards]",
         className
       )}
+      style={{ animationDelay: `${animationDelay}ms` }}
       onClick={handleClick}
     >
       {/* Thumbnail Container */}
