@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import Hls from "hls.js";
 
-const LIVE_STREAM_URL = "https://playout.djtv.pt/djtv/index.m3u8";
+const LIVE_STREAM_URL = "https://playout.djtv.pt/djtv/index.m3u8?token=5n1QjQNdX5sii3";
 
 const Live = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
