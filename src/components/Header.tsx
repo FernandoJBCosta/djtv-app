@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Search, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import djtvLogo from "@/assets/djtv-logo.png";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -26,9 +27,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <span className="font-display text-3xl md:text-4xl text-primary tracking-wider">
-              DJTV
-            </span>
+            <img src={djtvLogo} alt="DJTV" className="h-10 md:h-12 w-auto" />
           </div>
 
           {/* Desktop Navigation */}
