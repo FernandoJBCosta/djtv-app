@@ -24,7 +24,6 @@ export function Header() {
     { href: "/", label: "Home" },
     { href: "/live", label: "Live" },
     { href: "/categories", label: "Categories" },
-    { href: "/my-list", label: "My List" },
   ];
 
   return (
