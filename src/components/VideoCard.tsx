@@ -23,13 +23,13 @@ export function VideoCard({ video, onPlay, className }: VideoCardProps) {
   return (
     <div
       className={cn(
-        "group relative flex-shrink-0 w-[280px] md:w-[320px] cursor-pointer",
+        "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] cursor-pointer",
         className
       )}
       onClick={handleClick}
     >
       {/* Thumbnail */}
-      <div className="relative aspect-square rounded-lg overflow-hidden bg-card">
+      <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-card">
         <img
           src={video.thumbnail}
           alt={video.title}
