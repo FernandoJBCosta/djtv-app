@@ -1,10 +1,10 @@
 import { Category, CarouselItem } from "@/types/video";
 
 export const carouselItems: CarouselItem[] = [
-  { src: "https://app.djtv.pt/resources/images/carousel/Carousel0.png", width: 1740, height: 500 },
-  { src: "https://app.djtv.pt/resources/images/carousel/Carousel1.png", width: 1740, height: 500 },
-  { src: "https://app.djtv.pt/resources/images/carousel/Carousel2.png", width: 1740, height: 500 },
-  { src: "https://app.djtv.pt/resources/images/carousel/Carousel3.png", width: 1740, height: 500 },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel0.png", width: 1740, height: 500, videoId: "house-1" },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel1.png", width: 1740, height: 500, videoId: "techno-1" },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel2.png", width: 1740, height: 500, videoId: "trance-1" },
+  { src: "https://app.djtv.pt/resources/images/carousel/Carousel3.png", width: 1740, height: 500, videoId: "dubstep-1" },
 ];
 
 export const categories: Category[] = [

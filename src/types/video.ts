@@ -15,6 +15,7 @@ export interface CarouselItem {
   src: string;
   width: number;
   height: number;
+  videoId?: string;
 }
 
 export interface Category {
