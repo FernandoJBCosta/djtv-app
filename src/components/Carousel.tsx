@@ -59,9 +59,9 @@ export function Carousel({ items }: CarouselProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
           
           {/* Video Banner Overlay - shows "Watch Now" on hover */}
-          {item.videoId && !item.isLive && (
-            <div className="absolute inset-0 bg-black/0 hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100 group/banner">
-              <div className="flex flex-col items-center gap-3 transform translate-y-4 group-hover/banner:translate-y-0 transition-transform duration-300">
+          {item.videoId && !item.isLive && index === currentIndex && (
+            <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all duration-300 flex items-center justify-center group/banner">
+              <div className="flex flex-col items-center gap-3 opacity-0 group-hover/banner:opacity-100 transform translate-y-4 group-hover/banner:translate-y-0 transition-all duration-300">
                 <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-lg shadow-primary/30">
                   <svg className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
