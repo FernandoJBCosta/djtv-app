@@ -32,9 +32,9 @@ export function Carousel({ items }: CarouselProps) {
 
   const handleBannerClick = (item: CarouselItem) => {
     if (item.isLive && item.videoUrl) {
-      navigate("/live", { state: { videoUrl: item.videoUrl } });
+      navigate("/live", { state: { videoUrl: item.videoUrl, title: item.title } });
     } else if (item.videoUrl) {
-      navigate("/video", { state: { videoUrl: item.videoUrl, title: "Featured Video" } });
+      navigate("/video", { state: { videoUrl: item.videoUrl, title: item.title || "Featured Video" } });
     } else if (item.videoId) {
       navigate(`/dj/${item.videoId}`);
     }

@@ -36,11 +36,13 @@ function parseXMLDocument(xmlDoc: Document): ParsedData {
         const isLive = lockup.getAttribute("islive") === "true";
         const videoUrl = lockup.getAttribute("videourl") || undefined;
         const videoId = lockup.getAttribute("videoid") || undefined;
+        const title = lockup.getAttribute("title") || undefined;
         
         carousel.push({
           src: img.getAttribute("src") || "",
           width: parseInt(img.getAttribute("width") || "1740"),
           height: parseInt(img.getAttribute("height") || "500"),
+          title,
           isLive,
           videoUrl,
           videoId,

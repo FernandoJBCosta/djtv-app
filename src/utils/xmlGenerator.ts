@@ -14,6 +14,7 @@ export function generateXML(data: XMLData): string {
     if (item.isLive) attrs.push('islive="true"');
     if (item.videoUrl) attrs.push(`videourl="${escapeXml(item.videoUrl)}"`);
     if (item.videoId) attrs.push(`videoid="${escapeXml(item.videoId)}"`);
+    if (item.title) attrs.push(`title="${escapeXml(item.title)}"`);
     
     const lockupAttrs = attrs.length > 0 ? ` ${attrs.join(" ")}` : "";
     xml += `      <lockup${lockupAttrs}>
