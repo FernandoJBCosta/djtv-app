@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Live from "./pages/Live";
 import Categories from "./pages/Categories";
 import DJProfile from "./pages/DJProfile";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import { usePushNotifications } from "./hooks/usePushNotifications";
 
@@ -25,9 +26,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/live" element={<Live />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/dj/:id" element={<DJProfile />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/dj/:id" element={<DJProfile />} />
+          <Route path="/settings" element={<Settings />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
