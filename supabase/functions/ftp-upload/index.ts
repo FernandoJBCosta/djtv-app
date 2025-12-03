@@ -116,7 +116,7 @@ serve(async (req) => {
     }
 
     if (req.method === 'POST') {
-      const { xml, path = '/public_html/content/index.xml' } = await req.json();
+      const { xml, path = '/content/index.xml' } = await req.json();
       
       if (!xml || typeof xml !== 'string') {
         return new Response(JSON.stringify({ error: 'Invalid XML data' }), {
