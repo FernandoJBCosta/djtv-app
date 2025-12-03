@@ -41,6 +41,110 @@ export type Database = {
         }
         Relationships: []
       }
+      dj_videos: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          dj_id: string
+          duration_seconds: number | null
+          id: string
+          is_featured: boolean
+          published_at: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          video_url: string
+          view_count: number
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          dj_id: string
+          duration_seconds?: number | null
+          id?: string
+          is_featured?: boolean
+          published_at?: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          video_url: string
+          view_count?: number
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          dj_id?: string
+          duration_seconds?: number | null
+          id?: string
+          is_featured?: boolean
+          published_at?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dj_videos_dj_id_fkey"
+            columns: ["dj_id"]
+            isOneToOne: false
+            referencedRelation: "djs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      djs: {
+        Row: {
+          banner_url: string | null
+          bio: string | null
+          created_at: string
+          facebook_url: string | null
+          id: string
+          instagram_url: string | null
+          is_featured: boolean
+          name: string
+          profile_image_url: string | null
+          slug: string
+          soundcloud_url: string | null
+          spotify_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          banner_url?: string | null
+          bio?: string | null
+          created_at?: string
+          facebook_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          is_featured?: boolean
+          name: string
+          profile_image_url?: string | null
+          slug: string
+          soundcloud_url?: string | null
+          spotify_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          banner_url?: string | null
+          bio?: string | null
+          created_at?: string
+          facebook_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          is_featured?: boolean
+          name?: string
+          profile_image_url?: string | null
+          slug?: string
+          soundcloud_url?: string | null
+          spotify_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notification_preferences: {
         Row: {
           created_at: string
