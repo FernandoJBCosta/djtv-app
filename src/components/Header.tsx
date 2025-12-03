@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Instagram, Facebook } from "lucide-react";
+import { Search, Menu, X, Instagram, Facebook, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import djtvLogo from "@/assets/djtv-logo.png";
@@ -23,6 +23,7 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/categories", label: "Categories" },
+    { href: "/settings", label: "Settings", icon: Settings },
   ];
 
   return (
