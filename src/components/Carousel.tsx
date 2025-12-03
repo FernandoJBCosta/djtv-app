@@ -60,9 +60,16 @@ export function Carousel({ items }: CarouselProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
           
-          {/* Video Banner Overlay - shows "Watch Now" on hover */}
+          {/* Video Banner Overlay - shows title and "Watch Now" on hover */}
           {(item.videoUrl || item.videoId) && !item.isLive && index === currentIndex && (
             <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all duration-300 flex items-center justify-center group/banner">
+              {/* Title always visible at bottom */}
+              {item.title && (
+                <div className="absolute bottom-16 left-8 right-8">
+                  <h2 className="font-display text-3xl md:text-5xl text-foreground drop-shadow-lg">{item.title}</h2>
+                </div>
+              )}
+              {/* Play button on hover */}
               <div className="flex flex-col items-center gap-3 opacity-0 group-hover/banner:opacity-100 transform translate-y-4 group-hover/banner:translate-y-0 transition-all duration-300">
                 <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-lg shadow-primary/30">
                   <svg className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -109,7 +116,7 @@ export function Carousel({ items }: CarouselProps) {
                 <div className="flex items-center gap-4 mb-6">
                   <Radio className="w-10 h-10 text-red-500 animate-pulse" />
                   <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-foreground drop-shadow-lg">
-                    WATCH LIVE DJ SETS
+                    {item.title || "WATCH LIVE DJ SETS"}
                   </h2>
                   <Radio className="w-10 h-10 text-red-500 animate-pulse" />
                 </div>
