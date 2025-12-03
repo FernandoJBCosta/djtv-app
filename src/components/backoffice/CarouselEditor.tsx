@@ -109,16 +109,16 @@ export function CarouselEditor({ items, onChange }: CarouselEditorProps) {
                   </div>
                 </div>
 
-                {!item.isLive && (
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label>Video URL (optional)</Label>
-                      <Input
-                        value={item.videoUrl || ""}
-                        onChange={(e) => updateItem(item.id, { videoUrl: e.target.value })}
-                        placeholder="https://..."
-                      />
-                    </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label>Video URL {item.isLive ? "(Live Stream)" : "(optional)"}</Label>
+                    <Input
+                      value={item.videoUrl || ""}
+                      onChange={(e) => updateItem(item.id, { videoUrl: e.target.value })}
+                      placeholder="https://..."
+                    />
+                  </div>
+                  {!item.isLive && (
                     <div className="space-y-2">
                       <Label>Video ID (optional)</Label>
                       <Input
@@ -127,8 +127,8 @@ export function CarouselEditor({ items, onChange }: CarouselEditorProps) {
                         placeholder="video-id"
                       />
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {item.src && (
                   <div className="mt-4">
