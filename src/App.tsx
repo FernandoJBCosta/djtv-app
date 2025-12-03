@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Live from "./pages/Live";
 import Categories from "./pages/Categories";
 import DJProfile from "./pages/DJProfile";
+import Backoffice from "./pages/Backoffice";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/live" element={<Live />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/dj/:id" element={<DJProfile />} />
+          <Route path="/backoffice" element={<Backoffice />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
