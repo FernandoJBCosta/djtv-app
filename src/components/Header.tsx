@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, Instagram, Youtube, Facebook } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import djtvLogo from "@/assets/djtv-logo.png";
@@ -119,6 +119,37 @@ export function Header() {
             </Link>
           ))}
         </nav>
+        
+        {/* Social Media Links */}
+        <div className="px-6 mt-auto pb-8 border-t border-border pt-6">
+          <p className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">Follow Us</p>
+          <div className="flex items-center gap-4">
+            <a 
+              href="https://instagram.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-foreground/60 hover:text-primary transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://youtube.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-foreground/60 hover:text-primary transition-colors"
+            >
+              <Youtube className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://facebook.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-foreground/60 hover:text-primary transition-colors"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
       </div>
 
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
