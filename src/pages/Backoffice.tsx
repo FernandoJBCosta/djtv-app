@@ -137,6 +137,7 @@ export default function Backoffice() {
         if (img) {
           carouselData.push({
             id: `carousel-${index}`,
+            title: lockup.getAttribute("title") || undefined,
             src: img.getAttribute("src") || "",
             width: parseInt(img.getAttribute("width") || "1740"),
             height: parseInt(img.getAttribute("height") || "500"),
@@ -212,6 +213,7 @@ export default function Backoffice() {
           if (img) {
             carouselData.push({
               id: `carousel-${index}`,
+              title: lockup.getAttribute("title") || undefined,
               src: img.getAttribute("src") || "",
               width: parseInt(img.getAttribute("width") || "1740"),
               height: parseInt(img.getAttribute("height") || "500"),
