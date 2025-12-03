@@ -91,6 +91,26 @@
   .animate-scale-in {
     animation: scaleIn 0.3s ease-out forwards;
   }
+
+  /* TV Focus Styles for D-pad/Remote Navigation */
+  .tv-focusable {
+    @apply outline-none transition-all duration-200;
+  }
+
+  .tv-focusable:focus-visible {
+    @apply ring-4 ring-primary ring-offset-2 ring-offset-background scale-105;
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* TV-optimized text sizes */
+  @media (min-width: 1920px) and (min-height: 1080px) {
+    .tv-text {
+      font-size: 1.25rem;
+    }
+    .tv-title {
+      font-size: 2.5rem;
+    }
+  }
 }
 
 @keyframes fadeUp {
