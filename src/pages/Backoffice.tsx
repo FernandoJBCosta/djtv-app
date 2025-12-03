@@ -14,6 +14,7 @@ import { carouselItems, categories } from "@/data/djtvData";
 import { supabase } from "@/integrations/supabase/client";
 
 const STORAGE_KEY = "backoffice_xml_data";
+const PRODUCTION_XML_URL = "https://app.djtv.pt/content/index.xml";
 
 function convertToEditorData(): XMLData {
   const carouselData: CarouselItemData[] = carouselItems.map((item, index) => ({
@@ -94,9 +95,7 @@ export default function Backoffice() {
         throw new Error(response.error.message);
       }
 
-      if (response.data?.url) {
-        setServerXmlUrl(response.data.url);
-      }
+      setServerXmlUrl(PRODUCTION_XML_URL);
       toast.success("XML saved to server successfully");
     } catch (error) {
       console.error('Save to server error:', error);
