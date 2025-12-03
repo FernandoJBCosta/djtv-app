@@ -10,7 +10,33 @@ interface CarouselProps {
 
 export function Carousel({ items }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const navigate = useNavigate();
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      setCurrentIndex((prev) => (prev + 1) % items.length);
+    } else if (isRightSwipe) {
+      setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
+    }
+  };
 
   useEffect(() => {
     if (items.length === 0) return;
@@ -43,7 +69,12 @@ export function Carousel({ items }: CarouselProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="relative h-[50vh] min-h-[400px] w-full overflow-hidden group">
+    <section 
+      className="relative h-[50vh] min-h-[400px] w-full overflow-hidden group"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Background Images */}
       {items.map((item, index) => (
         <div
