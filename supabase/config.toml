@@ -1,1 +1,4 @@
 project_id = "lmysbaxmmocxnlyzwokx"
+
+[functions.xml-manager]
+verify_jwt = false
