@@ -60,24 +60,26 @@ export function Carousel({ items }: CarouselProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
           
-          {/* Video Banner Overlay - shows title and "Watch Now" on hover */}
-          {(item.videoUrl || item.videoId) && !item.isLive && index === currentIndex && (
-            <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all duration-300 flex items-center justify-center group/banner">
+          {/* Banner Overlay - shows title always and "Watch Now" on hover if has video */}
+          {!item.isLive && index === currentIndex && (
+            <div className={`absolute inset-0 bg-black/0 ${(item.videoUrl || item.videoId) ? 'hover:bg-black/40' : ''} transition-all duration-300 flex items-center justify-center group/banner`}>
               {/* Title always visible at bottom */}
               {item.title && (
                 <div className="absolute bottom-16 left-8 right-8">
                   <h2 className="font-display text-3xl md:text-5xl text-foreground drop-shadow-lg">{item.title}</h2>
                 </div>
               )}
-              {/* Play button on hover */}
-              <div className="flex flex-col items-center gap-3 opacity-0 group-hover/banner:opacity-100 transform translate-y-4 group-hover/banner:translate-y-0 transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-lg shadow-primary/30">
-                  <svg className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
+              {/* Play button on hover - only if has video */}
+              {(item.videoUrl || item.videoId) && (
+                <div className="flex flex-col items-center gap-3 opacity-0 group-hover/banner:opacity-100 transform translate-y-4 group-hover/banner:translate-y-0 transition-all duration-300">
+                  <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-lg shadow-primary/30">
+                    <svg className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                  <span className="font-display text-2xl text-foreground drop-shadow-lg">WATCH NOW</span>
                 </div>
-                <span className="font-display text-2xl text-foreground drop-shadow-lg">WATCH NOW</span>
-              </div>
+              )}
             </div>
           )}
           
