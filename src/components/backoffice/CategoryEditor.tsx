@@ -54,6 +54,10 @@ export function CategoryEditor({ categories, onChange }: CategoryEditorProps) {
   };
 
   const updateVideo = (categoryId: string, videoId: string, updates: Partial<VideoData>) => {
+    // If updating the video ID, also update the expandedVideo state
+    if (updates.id && expandedVideo === videoId) {
+      setExpandedVideo(updates.id);
+    }
     onChange(
       categories.map((cat) =>
         cat.id === categoryId
