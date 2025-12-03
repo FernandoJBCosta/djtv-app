@@ -36,6 +36,22 @@ npm i
 npm run dev
 ```
 
+For iOS and Android mobile, your project already has Capacitor configured. To build:
+
+1º Export to GitHub via "Export to GitHub" button
+2º Clone and run npm install
+3º Add platforms: npx cap add ios and/or npx cap add android
+4º Run npm run build then npx cap sync
+5º Open in IDE: npx cap open ios (requires Mac + Xcode) or npx cap open android (requires Android Studio)
+For Apple TV and Android TV, Capacitor doesn't natively support TV platforms. Your options:
+
+Platform Approach
+Apple TV Requires native tvOS development in Swift/SwiftUI, or use a WebView wrapper (limited)
+Android TV Requires Android Leanback library for TV-optimized UI, can extend Capacitor Android project
+Recommendation: If TV support is important, consider building a responsive web app that works in TV browsers, or building separate native TV apps that share your backend/API.
+
+Would you like me to focus on getting the mobile iOS/Android builds working first, or do you need specific guidance on one of the TV platforms?
+
 **Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).
