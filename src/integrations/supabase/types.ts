@@ -14,7 +14,203 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      device_tokens: {
+        Row: {
+          created_at: string
+          id: string
+          platform: string
+          token: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          platform: string
+          token: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          platform?: string
+          token?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      dj_videos: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          dj_id: string
+          duration_seconds: number | null
+          id: string
+          is_featured: boolean
+          published_at: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          video_url: string
+          view_count: number
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          dj_id: string
+          duration_seconds?: number | null
+          id?: string
+          is_featured?: boolean
+          published_at?: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          video_url: string
+          view_count?: number
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          dj_id?: string
+          duration_seconds?: number | null
+          id?: string
+          is_featured?: boolean
+          published_at?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dj_videos_dj_id_fkey"
+            columns: ["dj_id"]
+            isOneToOne: false
+            referencedRelation: "djs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      djs: {
+        Row: {
+          banner_url: string | null
+          bio: string | null
+          created_at: string
+          facebook_url: string | null
+          id: string
+          instagram_url: string | null
+          is_featured: boolean
+          name: string
+          profile_image_url: string | null
+          slug: string
+          soundcloud_url: string | null
+          spotify_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          banner_url?: string | null
+          bio?: string | null
+          created_at?: string
+          facebook_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          is_featured?: boolean
+          name: string
+          profile_image_url?: string | null
+          slug: string
+          soundcloud_url?: string | null
+          spotify_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          banner_url?: string | null
+          bio?: string | null
+          created_at?: string
+          facebook_url?: string | null
+          id?: string
+          instagram_url?: string | null
+          is_featured?: boolean
+          name?: string
+          profile_image_url?: string | null
+          slug?: string
+          soundcloud_url?: string | null
+          spotify_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notification_preferences: {
+        Row: {
+          created_at: string
+          dj_updates: boolean
+          events: boolean
+          id: string
+          live_streams: boolean
+          new_content: boolean
+          push_enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dj_updates?: boolean
+          events?: boolean
+          id?: string
+          live_streams?: boolean
+          new_content?: boolean
+          push_enabled?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dj_updates?: boolean
+          events?: boolean
+          id?: string
+          live_streams?: boolean
+          new_content?: boolean
+          push_enabled?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          data: Json | null
+          id: string
+          read_at: string | null
+          sent_at: string
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          body?: string | null
+          data?: Json | null
+          id?: string
+          read_at?: string | null
+          sent_at?: string
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          body?: string | null
+          data?: Json | null
+          id?: string
+          read_at?: string | null
+          sent_at?: string
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
