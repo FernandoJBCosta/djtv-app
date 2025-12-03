@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Instagram, Facebook, Settings, LogIn, User } from "lucide-react";
+import { Search, Menu, X, Instagram, Facebook } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import djtvLogo from "@/assets/djtv-logo.png";
 import { SearchModal } from "./SearchModal";
-import { useAuth } from "@/hooks/useAuth";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
-  const { isAuthenticated, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +56,7 @@ export function Header() {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -67,17 +65,6 @@ export function Header() {
             >
               <Search className="w-5 h-5" />
             </Button>
-            {!loading && (
-              <Link to={isAuthenticated ? "/settings" : "/auth"}>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="text-foreground/80 hover:text-primary"
-                >
-                  {isAuthenticated ? <User className="w-5 h-5" /> : <LogIn className="w-5 h-5" />}
-                </Button>
-              </Link>
-            )}
             <Button
               variant="ghost"
               size="icon"
@@ -131,28 +118,6 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            to={isAuthenticated ? "/settings" : "/auth"}
-            onClick={() => setMenuOpen(false)}
-            className={cn(
-              "transition-colors font-medium py-3 px-4 rounded-lg flex items-center gap-2",
-              location.pathname === "/settings" || location.pathname === "/auth"
-                ? "text-primary bg-primary/10" 
-                : "text-foreground/80 hover:text-primary hover:bg-muted"
-            )}
-          >
-            {isAuthenticated ? (
-              <>
-                <Settings className="w-4 h-4" />
-                Settings
-              </>
-            ) : (
-              <>
-                <LogIn className="w-4 h-4" />
-                Sign In
-              </>
-            )}
-          </Link>
         </nav>
         
         {/* Social Media Links */}
