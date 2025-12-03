@@ -39,6 +39,16 @@ async function uploadViaFTP(host: string, user: string, pass: string, remotePath
     // Set binary mode
     response = await sendCommand("TYPE I");
     
+    // Create directory structure if needed
+    const pathParts = remotePath.split('/').filter(p => p);
+    let currentPath = '';
+    for (let i = 0; i < pathParts.length - 1; i++) {
+      currentPath += '/' + pathParts[i];
+      // Try to create directory (ignore errors if it already exists)
+      const mkdResponse = await sendCommand(`MKD ${currentPath}`);
+      console.log(`MKD ${currentPath}: ${mkdResponse.trim()}`);
+    }
+    
     // Enter passive mode
     response = await sendCommand("PASV");
     if (!response.startsWith("227")) throw new Error("PASV failed: " + response);
