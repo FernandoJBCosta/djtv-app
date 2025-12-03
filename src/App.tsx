@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Live from "./pages/Live";
+import VideoPlayer from "./pages/VideoPlayer";
 import Categories from "./pages/Categories";
 import DJProfile from "./pages/DJProfile";
 import Backoffice from "./pages/Backoffice";
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/live" element={<Live />} />
+          <Route path="/video" element={<VideoPlayer />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/dj/:id" element={<DJProfile />} />
           <Route path="/backoffice" element={<Backoffice />} />

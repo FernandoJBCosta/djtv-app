@@ -31,8 +31,10 @@ export function Carousel({ items }: CarouselProps) {
   };
 
   const handleBannerClick = (item: CarouselItem) => {
-    if (item.isLive) {
-      navigate("/live");
+    if (item.isLive && item.videoUrl) {
+      navigate("/live", { state: { videoUrl: item.videoUrl } });
+    } else if (item.videoUrl) {
+      navigate("/video", { state: { videoUrl: item.videoUrl, title: "Featured Video" } });
     } else if (item.videoId) {
       navigate(`/dj/${item.videoId}`);
     }
@@ -48,7 +50,7 @@ export function Carousel({ items }: CarouselProps) {
           key={index}
           className={`absolute inset-0 transition-opacity duration-700 ${
             index === currentIndex ? "opacity-100" : "opacity-0"
-          } ${item.videoId || item.isLive ? "cursor-pointer" : ""}`}
+          } ${item.videoUrl || item.videoId || item.isLive ? "cursor-pointer" : ""}`}
           onClick={() => index === currentIndex && handleBannerClick(item)}
         >
           <img
@@ -59,7 +61,7 @@ export function Carousel({ items }: CarouselProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
           
           {/* Video Banner Overlay - shows "Watch Now" on hover */}
-          {item.videoId && !item.isLive && index === currentIndex && (
+          {(item.videoUrl || item.videoId) && !item.isLive && index === currentIndex && (
             <div className="absolute inset-0 bg-black/0 hover:bg-black/40 transition-all duration-300 flex items-center justify-center group/banner">
               <div className="flex flex-col items-center gap-3 opacity-0 group-hover/banner:opacity-100 transform translate-y-4 group-hover/banner:translate-y-0 transition-all duration-300">
                 <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-lg shadow-primary/30">

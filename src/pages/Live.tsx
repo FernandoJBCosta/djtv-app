@@ -2,16 +2,19 @@ import { useRef, useEffect, useState } from "react";
 import { Play, Pause, Volume2, VolumeX, Maximize, Minimize, Radio, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Hls from "hls.js";
 
-const LIVE_STREAM_URL = "https://playout.djtv.pt/djtv/index.m3u8?token=5n1QjQNdX5sii3";
+const DEFAULT_LIVE_STREAM_URL = "https://playout.djtv.pt/djtv/index.m3u8?token=5n1QjQNdX5sii3";
 
 const Live = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const hlsRef = useRef<Hls | null>(null);
+
+  const streamUrl = location.state?.videoUrl || DEFAULT_LIVE_STREAM_URL;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -35,7 +38,7 @@ const Live = () => {
       });
 
       hlsRef.current = hls;
-      hls.loadSource(LIVE_STREAM_URL);
+      hls.loadSource(streamUrl);
       hls.attachMedia(videoElement);
 
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -64,7 +67,7 @@ const Live = () => {
         }
       });
     } else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
-      videoElement.src = LIVE_STREAM_URL;
+      videoElement.src = streamUrl;
       videoElement.addEventListener("loadedmetadata", () => {
         setIsLoading(false);
         videoElement.play();
@@ -78,7 +81,7 @@ const Live = () => {
         hlsRef.current.destroy();
       }
     };
-  }, []);
+  }, [streamUrl]);
 
   useEffect(() => {
     const videoElement = videoRef.current;
