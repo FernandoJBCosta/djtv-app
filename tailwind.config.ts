@@ -12,6 +12,15 @@ export default {
   			'2xl': '1400px'
   		}
   	},
+  	screens: {
+  		'sm': '640px',
+  		'md': '768px',
+  		'lg': '1024px',
+  		'xl': '1280px',
+  		'2xl': '1536px',
+  		'tv': '1920px',
+  		'tv-4k': '3840px',
+  	},
   	extend: {
   		fontFamily: {
   			sans: [

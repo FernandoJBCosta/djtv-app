@@ -27,12 +27,16 @@ export function VideoCard({ video, onPlay, className, index = 0 }: VideoCardProp
   return (
     <div
       className={cn(
-        "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] cursor-pointer pt-3",
+        "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] tv:w-[280px] cursor-pointer pt-3",
         "opacity-0 animate-[fade-in-up_0.5s_ease-out_forwards]",
+        "tv-focusable focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:scale-105 focus-visible:shadow-[var(--shadow-glow)]",
         className
       )}
       style={{ animationDelay: `${animationDelay}ms` }}
       onClick={handleClick}
+      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+      tabIndex={0}
+      data-tv-focusable
     >
       {/* Thumbnail Container */}
       <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-card transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] group-hover:-translate-y-3">
