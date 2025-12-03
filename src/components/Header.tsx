@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Instagram, Youtube, Facebook } from "lucide-react";
+import { Search, Menu, X, Instagram, Facebook } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import djtvLogo from "@/assets/djtv-logo.png";
@@ -125,7 +125,7 @@ export function Header() {
           <p className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">Follow Us</p>
           <div className="flex items-center gap-4">
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/djtv_pt/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-foreground/60 hover:text-primary transition-colors"
@@ -133,15 +133,7 @@ export function Header() {
               <Instagram className="w-5 h-5" />
             </a>
             <a 
-              href="https://youtube.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-foreground/60 hover:text-primary transition-colors"
-            >
-              <Youtube className="w-5 h-5" />
-            </a>
-            <a 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/DJTV.PT" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-foreground/60 hover:text-primary transition-colors"
