@@ -60,7 +60,7 @@ export function Carousel({ items }: CarouselProps) {
         <div
           key={index}
           className={`absolute inset-0 transition-opacity duration-700 ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
+            index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"
           } ${item.videoUrl || item.videoId || item.isLive ? "cursor-pointer" : ""}`}
           onClick={() => index === currentIndex && handleBannerClick(item)}
         >
