@@ -6,7 +6,7 @@ import { carouselItems as defaultCarouselItems, categories as defaultCategories 
 import { fetchAndParseXML } from "@/services/xmlParser";
 import { CarouselItem, Category } from "@/types/video";
 
-const SERVER_XML_URL = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/dj-media/content/index.xml`;
+const SERVER_XML_URL = 'https://app.djtv.pt/content/index.xml';
 
 const Index = () => {
   const [carouselItems, setCarouselItems] = useState<CarouselItem[]>(defaultCarouselItems);
