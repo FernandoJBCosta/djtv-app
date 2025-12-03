@@ -12,6 +12,17 @@ export function Carousel({ items }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
+  // Debug: Log carousel items to check videoUrl
+  useEffect(() => {
+    console.log("Carousel items:", items.map((item, i) => ({
+      index: i,
+      title: item.title,
+      videoUrl: item.videoUrl,
+      videoId: item.videoId,
+      isLive: item.isLive
+    })));
+  }, [items]);
+
   useEffect(() => {
     if (items.length === 0) return;
     
