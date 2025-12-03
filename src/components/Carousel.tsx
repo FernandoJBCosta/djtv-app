@@ -31,7 +31,7 @@ export function Carousel({ items }: CarouselProps) {
   };
 
   const handleBannerClick = (item: CarouselItem) => {
-    if (item.isLive && item.videoUrl) {
+    if (item.isLive) {
       navigate("/live", { state: { videoUrl: item.videoUrl, title: item.title } });
     } else if (item.videoUrl) {
       navigate("/video", { state: { videoUrl: item.videoUrl, title: item.title || "Featured Video" } });
