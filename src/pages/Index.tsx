@@ -16,7 +16,10 @@ const Index = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const data = await fetchAndParseXML(SERVER_XML_URL);
+        // Add cache-busting parameter
+        const url = `${SERVER_XML_URL}?t=${Date.now()}`;
+        const data = await fetchAndParseXML(url);
+        console.log("Loaded XML data:", data);
         if (data.carousel.length > 0) {
           setCarouselItems(data.carousel);
         }
