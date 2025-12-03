@@ -14,7 +14,7 @@ import { carouselItems, categories } from "@/data/djtvData";
 import { supabase } from "@/integrations/supabase/client";
 
 const STORAGE_KEY = "backoffice_xml_data";
-const SERVER_XML_URL = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/dj-media/content/index.xml`;
+const PRODUCTION_XML_URL = "https://app.djtv.pt/content/index.xml";
 
 function convertToEditorData(): XMLData {
   const carouselData: CarouselItemData[] = carouselItems.map((item, index) => ({
@@ -52,7 +52,6 @@ export default function Backoffice() {
   const [activeTab, setActiveTab] = useState("carousel");
   const [isSavingToServer, setIsSavingToServer] = useState(false);
   const [isLoadingFromServer, setIsLoadingFromServer] = useState(false);
-  const [serverXmlUrl, setServerXmlUrl] = useState<string | null>(null);
 
   useEffect(() => {
     // Load from localStorage or use default data
@@ -83,9 +82,9 @@ export default function Backoffice() {
     setIsSavingToServer(true);
     try {
       const xml = generateXML(data);
-      const response = await supabase.functions.invoke('xml-manager', {
+      const response = await supabase.functions.invoke('ftp-upload', {
         method: 'POST',
-        body: { xml },
+        body: { xml, path: '/public_html/content/index.xml' },
         headers: {
           'x-admin-password': ADMIN_PASSWORD,
         },
@@ -95,11 +94,14 @@ export default function Backoffice() {
         throw new Error(response.error.message);
       }
 
-      setServerXmlUrl(SERVER_XML_URL);
-      toast.success("XML saved to server successfully");
+      if (response.data?.error) {
+        throw new Error(response.data.error);
+      }
+
+      toast.success("XML uploaded to app.djtv.pt successfully");
     } catch (error) {
       console.error('Save to server error:', error);
-      toast.error("Failed to save to server");
+      toast.error(`Failed to upload: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsSavingToServer(false);
     }
@@ -108,25 +110,19 @@ export default function Backoffice() {
   const handleLoadFromServer = async () => {
     setIsLoadingFromServer(true);
     try {
-      const response = await supabase.functions.invoke('xml-manager', {
-        method: 'GET',
-        headers: {
-          'x-admin-password': ADMIN_PASSWORD,
-        },
-      });
-
-      if (response.error) {
-        throw new Error(response.error.message);
+      // Fetch directly from the production URL with cache busting
+      const url = `${PRODUCTION_XML_URL}?t=${Date.now()}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch: ${response.status}`);
       }
 
-      if (!response.data?.exists || !response.data?.xml) {
-        toast.info("No XML file found on server");
-        return;
-      }
+      const xmlText = await response.text();
 
       // Parse the XML
       const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(response.data.xml, "text/xml");
+      const xmlDoc = parser.parseFromString(xmlText, "text/xml");
       
       // Parse carousel
       const carouselData: CarouselItemData[] = [];
@@ -184,7 +180,7 @@ export default function Backoffice() {
       });
 
       setData({ carousel: carouselData, categories: categoryData });
-      toast.success("XML loaded from server");
+      toast.success("XML loaded from app.djtv.pt");
     } catch (error) {
       console.error('Load from server error:', error);
       toast.error("Failed to load from server");
@@ -315,13 +311,6 @@ export default function Backoffice() {
             </Button>
           </div>
         </div>
-        {serverXmlUrl && (
-          <div className="container mx-auto px-4 pb-3">
-            <p className="text-xs text-muted-foreground">
-              Server XML URL: <a href={serverXmlUrl} target="_blank" rel="noopener noreferrer" className="text-primary underline">{serverXmlUrl}</a>
-            </p>
-          </div>
-        )}
       </header>
 
       <main className="container mx-auto px-4 py-6">
