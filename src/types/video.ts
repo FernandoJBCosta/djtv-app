@@ -15,6 +15,7 @@ export interface CarouselItem {
   src: string;
   width: number;
   height: number;
+  title?: string;
   videoId?: string;
   videoUrl?: string;
   isLive?: boolean;

@@ -15,6 +15,7 @@ const Live = () => {
   const hlsRef = useRef<Hls | null>(null);
 
   const streamUrl = location.state?.videoUrl || DEFAULT_LIVE_STREAM_URL;
+  const streamTitle = location.state?.title || "DJTV Live";
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -252,7 +253,7 @@ const Live = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-white/80 text-sm font-display">DJTV Live</span>
+            <span className="text-white/80 text-sm font-display">{streamTitle}</span>
             <Button
               variant="ghost"
               size="icon"

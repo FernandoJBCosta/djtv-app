@@ -1,5 +1,6 @@
 export interface CarouselItemData {
   id: string;
+  title?: string;
   src: string;
   width: number;
   height: number;

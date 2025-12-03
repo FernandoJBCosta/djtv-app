@@ -89,6 +89,15 @@ export function CarouselEditor({ items, onChange }: CarouselEditorProps) {
 
             {expandedId === item.id && (
               <div className="space-y-4 pt-3 border-t">
+                <div className="space-y-2">
+                  <Label>Title</Label>
+                  <Input
+                    value={item.title || ""}
+                    onChange={(e) => updateItem(item.id, { title: e.target.value })}
+                    placeholder="Banner title (shown in video player)"
+                  />
+                </div>
+
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label>Image URL</Label>
