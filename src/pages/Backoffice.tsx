@@ -4,11 +4,12 @@ import { BackofficeLogin } from "./BackofficeLogin";
 import { CarouselEditor } from "@/components/backoffice/CarouselEditor";
 import { CategoryEditor } from "@/components/backoffice/CategoryEditor";
 import { XMLPreview } from "@/components/backoffice/XMLPreview";
+import { FTPSettingsEditor, getFTPSettings, FTPSettings } from "@/components/backoffice/FTPSettings";
 import { XMLData, CarouselItemData, CategoryData } from "@/types/backoffice";
 import { generateXML, downloadXML } from "@/utils/xmlGenerator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, Save, Upload, Cloud, CloudUpload, Loader2 } from "lucide-react";
+import { LogOut, Save, Upload, Cloud, CloudUpload, Loader2, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { carouselItems, categories } from "@/data/djtvData";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,6 +53,7 @@ export default function Backoffice() {
   const [activeTab, setActiveTab] = useState("carousel");
   const [isSavingToServer, setIsSavingToServer] = useState(false);
   const [isLoadingFromServer, setIsLoadingFromServer] = useState(false);
+  const [ftpSettings, setFtpSettings] = useState<FTPSettings>(getFTPSettings());
 
   useEffect(() => {
     // Load from localStorage or use default data
@@ -79,12 +81,24 @@ export default function Backoffice() {
   };
 
   const handleSaveToServer = async () => {
+    if (!ftpSettings.host || !ftpSettings.user || !ftpSettings.password) {
+      toast.error("Please configure FTP settings first");
+      setActiveTab("settings");
+      return;
+    }
+
     setIsSavingToServer(true);
     try {
       const xml = generateXML(data);
       const response = await supabase.functions.invoke('ftp-upload', {
         method: 'POST',
-        body: { xml, path: '/content/index.xml' },
+        body: { 
+          xml, 
+          path: ftpSettings.uploadPath,
+          host: ftpSettings.host,
+          user: ftpSettings.user,
+          password: ftpSettings.password,
+        },
         headers: {
           'x-admin-password': ADMIN_PASSWORD,
         },
@@ -98,7 +112,7 @@ export default function Backoffice() {
         throw new Error(response.data.error);
       }
 
-      toast.success("XML uploaded to app.djtv.pt successfully");
+      toast.success("XML uploaded successfully");
     } catch (error) {
       console.error('Save to server error:', error);
       toast.error(`Failed to upload: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -319,6 +333,10 @@ export default function Backoffice() {
             <TabsTrigger value="carousel">Carousel</TabsTrigger>
             <TabsTrigger value="categories">Categories</TabsTrigger>
             <TabsTrigger value="preview">XML Preview</TabsTrigger>
+            <TabsTrigger value="settings">
+              <Settings className="h-4 w-4 mr-1" />
+              Settings
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="carousel">
@@ -337,6 +355,10 @@ export default function Backoffice() {
 
           <TabsContent value="preview">
             <XMLPreview xml={xml} onDownload={handleDownload} />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <FTPSettingsEditor onSettingsChange={setFtpSettings} />
           </TabsContent>
         </Tabs>
       </main>

@@ -103,20 +103,21 @@ serve(async (req) => {
       });
     }
 
-    const ftpHost = Deno.env.get('FTP_HOST');
-    const ftpUser = Deno.env.get('FTP_USER');
-    const ftpPassword = Deno.env.get('FTP_PASSWORD');
-
-    if (!ftpHost || !ftpUser || !ftpPassword) {
-      console.error('FTP credentials not configured');
-      return new Response(JSON.stringify({ error: 'FTP credentials not configured' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
     if (req.method === 'POST') {
-      const { xml, path = '/content/index.xml' } = await req.json();
+      const { xml, path = '/content/index.xml', host, user, password } = await req.json();
+      
+      // Use credentials from request body, fallback to env vars
+      const ftpHost = host || Deno.env.get('FTP_HOST');
+      const ftpUser = user || Deno.env.get('FTP_USER');
+      const ftpPassword = password || Deno.env.get('FTP_PASSWORD');
+
+      if (!ftpHost || !ftpUser || !ftpPassword) {
+        console.error('FTP credentials not configured');
+        return new Response(JSON.stringify({ error: 'FTP credentials not configured. Please set them in Settings.' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
       
       if (!xml || typeof xml !== 'string') {
         return new Response(JSON.stringify({ error: 'Invalid XML data' }), {
