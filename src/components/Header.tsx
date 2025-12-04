@@ -94,7 +94,8 @@ export function Header() {
           menuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <div className="flex justify-end p-4">
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <img src={djtvLogo} alt="DJTV" className="h-10 w-auto" />
           <Button
             variant="ghost"
             size="icon"
