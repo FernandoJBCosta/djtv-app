@@ -84,7 +84,7 @@ export function VideoCard({ video, onPlay, className, index = 0 }: VideoCardProp
           {video.title}
         </h3>
         <p className="text-sm text-muted-foreground truncate mt-1 group-hover:text-muted-foreground/80 transition-colors duration-300">
-          {video.category}
+          {video.description}
         </p>
       </div>
     </div>
