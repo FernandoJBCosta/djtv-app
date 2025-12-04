@@ -228,7 +228,7 @@ class TVViewController: UIViewController, WKNavigationDelegate {
         view.addSubview(webView)
         
         // Load the app
-        if let url = URL(string: "https://5bd0bda0-2783-4551-bbe2-c7fffad7bfb3.lovableproject.com?forceHideBadge=true") {
+        if let url = URL(string: "https://app.djtv.pt") {
             webView.load(URLRequest(url: url))
         }
     }
