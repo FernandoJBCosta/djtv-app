@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize, Minimize } from "lucide-react";
+import { ArrowLeft, Play, Pause } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { categories as defaultCategories } from "@/data/djtvData";
 import { fetchAndParseXML } from "@/services/xmlParser";
-import { Video, Category } from "@/types/video";
+import { Video } from "@/types/video";
 import Hls from "hls.js";
 
 const SERVER_XML_URL = "https://app.djtv.pt/content/index.xml";
@@ -16,15 +15,9 @@ const DJProfile = () => {
   const navigate = useNavigate();
   
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const hlsRef = useRef<Hls | null>(null);
   
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(1);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoading, setIsDataLoading] = useState(true);
@@ -118,84 +111,46 @@ const DJProfile = () => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
-    const handleTimeUpdate = () => setCurrentTime(videoElement.currentTime);
-    const handleDurationChange = () => setDuration(videoElement.duration);
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
+    const handleWaiting = () => setIsLoading(true);
+    const handleCanPlay = () => setIsLoading(false);
 
-    videoElement.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement.addEventListener("durationchange", handleDurationChange);
     videoElement.addEventListener("play", handlePlay);
     videoElement.addEventListener("pause", handlePause);
+    videoElement.addEventListener("waiting", handleWaiting);
+    videoElement.addEventListener("canplay", handleCanPlay);
 
     return () => {
-      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
-      videoElement.removeEventListener("durationchange", handleDurationChange);
       videoElement.removeEventListener("play", handlePlay);
       videoElement.removeEventListener("pause", handlePause);
+      videoElement.removeEventListener("waiting", handleWaiting);
+      videoElement.removeEventListener("canplay", handleCanPlay);
     };
   }, []);
 
+  // Auto-hide play button overlay
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     if (showControls && isPlaying) {
-      timeout = setTimeout(() => setShowControls(false), 3000);
+      timeout = setTimeout(() => setShowControls(false), 4000);
     }
     return () => clearTimeout(timeout);
   }, [showControls, isPlaying]);
 
-  const togglePlay = () => {
+  const handleShowControls = useCallback(() => {
+    setShowControls(true);
+  }, []);
+
+  const togglePlay = useCallback(() => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {});
       }
     }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const handleVolumeChange = (value: number[]) => {
-    if (videoRef.current) {
-      const newVolume = value[0];
-      videoRef.current.volume = newVolume;
-      setVolume(newVolume);
-      setIsMuted(newVolume === 0);
-    }
-  };
-
-  const handleSeek = (value: number[]) => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = value[0];
-    }
-  };
-
-  const toggleFullscreen = () => {
-    if (!containerRef.current) return;
-
-    if (!isFullscreen) {
-      containerRef.current.requestFullscreen?.();
-    } else {
-      document.exitFullscreen?.();
-    }
-    setIsFullscreen(!isFullscreen);
-  };
-
-  const formatTime = (time: number) => {
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time % 3600) / 60);
-    const seconds = Math.floor(time % 60);
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    }
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-  };
+  }, [isPlaying]);
 
   if (isDataLoading) {
     return (
@@ -248,21 +203,23 @@ const DJProfile = () => {
         {/* Video Player Section */}
         <div className="container mx-auto px-4 md:px-8">
           <div
-            ref={containerRef}
-            className="relative aspect-video bg-card rounded-xl overflow-hidden"
-            onMouseMove={() => setShowControls(true)}
+            className="relative aspect-video bg-card rounded-xl overflow-hidden cursor-pointer"
+            onMouseMove={handleShowControls}
+            onTouchStart={handleShowControls}
+            onClick={togglePlay}
           >
             <video
               ref={videoRef}
               className="w-full h-full object-contain bg-black"
               poster={dj.thumbnail}
               playsInline
-              onClick={togglePlay}
+              webkit-playsinline="true"
+              x5-playsinline="true"
             />
 
             {/* Loading Overlay */}
-            {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+            {isLoading && !error && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/80 pointer-events-none">
                 <div className="text-center">
                   <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
                   <p className="text-white/60 text-sm">Loading stream...</p>
@@ -272,77 +229,28 @@ const DJProfile = () => {
 
             {/* Error Overlay */}
             {error && !isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/80">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/80 pointer-events-none">
                 <div className="text-center p-8">
                   <p className="text-white/60 mb-2">{error}</p>
-                  <p className="text-white/40 text-sm">Click play to try again</p>
+                  <p className="text-white/40 text-sm">Tap to try again</p>
                 </div>
               </div>
             )}
 
-            {/* Play Button Overlay */}
-            {!isPlaying && !isLoading && (
-              <div
-                className="absolute inset-0 flex items-center justify-center cursor-pointer"
-                onClick={togglePlay}
-              >
-                <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center shadow-[var(--shadow-glow)] transition-transform hover:scale-110">
-                  <Play className="w-10 h-10 text-primary-foreground fill-current ml-1" />
+            {/* Play/Pause Button Overlay */}
+            {!isLoading && !error && (
+              <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${
+                !isPlaying || showControls ? "opacity-100" : "opacity-0"
+              }`}>
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary/80 flex items-center justify-center shadow-lg">
+                  {isPlaying ? (
+                    <Pause className="w-10 h-10 md:w-12 md:h-12 text-white" />
+                  ) : (
+                    <Play className="w-10 h-10 md:w-12 md:h-12 text-white ml-1" />
+                  )}
                 </div>
               </div>
             )}
-
-            {/* Video Controls */}
-            <div
-              className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 transition-opacity duration-300 ${
-                showControls ? "opacity-100" : "opacity-0"
-              }`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Progress Bar */}
-              <div className="mb-4">
-                <Slider
-                  value={[currentTime]}
-                  max={duration || 100}
-                  step={1}
-                  onValueChange={handleSeek}
-                  className="cursor-pointer"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                {/* Left Controls */}
-                <div className="flex items-center gap-4">
-                  <Button variant="ghost" size="icon" onClick={togglePlay} className="text-white hover:bg-white/20">
-                    {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
-                  </Button>
-
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" onClick={toggleMute} className="text-white hover:bg-white/20">
-                      {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                    </Button>
-                    <Slider
-                      value={[isMuted ? 0 : volume]}
-                      max={1}
-                      step={0.1}
-                      onValueChange={handleVolumeChange}
-                      className="w-24"
-                    />
-                  </div>
-
-                  <span className="text-white text-sm">
-                    {formatTime(currentTime)} / {formatTime(duration || 0)}
-                  </span>
-                </div>
-
-                {/* Right Controls */}
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="icon" onClick={toggleFullscreen} className="text-white hover:bg-white/20">
-                    {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
-                  </Button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
