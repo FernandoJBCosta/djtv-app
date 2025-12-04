@@ -192,9 +192,15 @@ export default function VideoPlayer() {
 
       {/* Play/Pause Button Overlay */}
       {!isLoading && !error && (
-        <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${
-          !isPlaying || showControls ? "opacity-100" : "opacity-0"
-        }`}>
+        <div 
+          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+            !isPlaying || showControls ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            togglePlay();
+          }}
+        >
           <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary/80 flex items-center justify-center shadow-lg">
             {isPlaying ? (
               <Pause className="w-10 h-10 md:w-12 md:h-12 text-white" />
