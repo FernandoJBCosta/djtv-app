@@ -9,12 +9,11 @@ import { XMLData, CarouselItemData, CategoryData } from "@/types/backoffice";
 import { generateXML, downloadXML } from "@/utils/xmlGenerator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, Save, Upload, Cloud, CloudUpload, Loader2, Settings } from "lucide-react";
+import { LogOut, Upload, Cloud, CloudUpload, Loader2, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { carouselItems, categories } from "@/data/djtvData";
 import { supabase } from "@/integrations/supabase/client";
 
-const STORAGE_KEY = "backoffice_xml_data";
 const PRODUCTION_XML_URL = "https://app.djtv.pt/content/index.xml";
 
 function convertToEditorData(): XMLData {
@@ -138,10 +137,6 @@ export default function Backoffice() {
     loadFromServer();
   }, []);
 
-  const handleSave = () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    toast.success("Changes saved locally");
-  };
 
   const handleDownload = () => {
     const xml = generateXML(data);
@@ -386,9 +381,6 @@ export default function Backoffice() {
               </Button>
               <input type="file" accept=".xml" onChange={handleLoadFromFile} className="hidden" />
             </label>
-            <Button onClick={handleSave} variant="outline" size="sm">
-              <Save className="h-4 w-4 mr-1" /> Save Local
-            </Button>
             <Button onClick={logout} variant="ghost" size="sm">
               <LogOut className="h-4 w-4 mr-1" /> Logout
             </Button>
