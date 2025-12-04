@@ -21,7 +21,6 @@ export function CategoryEditor({ categories, onChange }: CategoryEditorProps) {
     const newCategory: CategoryData = {
       id: `category-${Date.now()}`,
       name: "New Category",
-      documentUrl: "/pages/new-category.xml",
       videos: [],
     };
     onChange([...categories, newCategory]);
@@ -132,21 +131,12 @@ export function CategoryEditor({ categories, onChange }: CategoryEditorProps) {
 
               <CollapsibleContent>
                 <div className="p-4 pt-0 space-y-4 border-t">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label>Category Name</Label>
-                      <Input
-                        value={category.name}
-                        onChange={(e) => updateCategory(category.id, { name: e.target.value })}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Document URL</Label>
-                      <Input
-                        value={category.documentUrl}
-                        onChange={(e) => updateCategory(category.id, { documentUrl: e.target.value })}
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <Label>Category Name</Label>
+                    <Input
+                      value={category.name}
+                      onChange={(e) => updateCategory(category.id, { name: e.target.value })}
+                    />
                   </div>
 
                   <div className="space-y-3">
