@@ -27,9 +27,10 @@ export function VideoCard({ video, onPlay, className, index = 0 }: VideoCardProp
   return (
     <div
       className={cn(
-        "group relative flex-shrink-0 w-[180px] sm:w-[200px] md:w-[220px] tv:w-[280px] cursor-pointer pt-3",
+        "group relative flex-shrink-0 cursor-pointer pt-3",
         "opacity-0 animate-[fade-in-up_0.5s_ease-out_forwards]",
         "tv-focusable focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:scale-105 focus-visible:shadow-[var(--shadow-glow)]",
+        !className?.includes("w-full") && "w-[180px] sm:w-[200px] md:w-[220px] tv:w-[280px]",
         className
       )}
       style={{ animationDelay: `${animationDelay}ms` }}
