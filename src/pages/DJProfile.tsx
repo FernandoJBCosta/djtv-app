@@ -4,9 +4,12 @@ import { ArrowLeft, Play, Pause, Volume2, VolumeX, Maximize, Minimize } from "lu
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { categories } from "@/data/djtvData";
-import { Video } from "@/types/video";
+import { categories as defaultCategories } from "@/data/djtvData";
+import { fetchAndParseXML } from "@/services/xmlParser";
+import { Video, Category } from "@/types/video";
 import Hls from "hls.js";
+
+const SERVER_XML_URL = "https://app.djtv.pt/content/index.xml";
 
 const DJProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,12 +27,32 @@ const DJProfile = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDataLoading, setIsDataLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dj, setDj] = useState<Video | undefined>(undefined);
 
-  // Find DJ from categories
-  const dj: Video | undefined = categories
-    .flatMap(cat => cat.videos)
-    .find(video => video.id === id);
+  // Fetch data from server XML
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const url = `${SERVER_XML_URL}?t=${Date.now()}`;
+        const data = await fetchAndParseXML(url);
+        const foundDj = data.categories
+          .flatMap(cat => cat.videos)
+          .find(video => video.id === id);
+        setDj(foundDj);
+      } catch (error) {
+        // Fallback to default data
+        const foundDj = defaultCategories
+          .flatMap(cat => cat.videos)
+          .find(video => video.id === id);
+        setDj(foundDj);
+      } finally {
+        setIsDataLoading(false);
+      }
+    };
+    loadData();
+  }, [id]);
 
   useEffect(() => {
     if (!dj || !videoRef.current) return;
@@ -174,6 +197,20 @@ const DJProfile = () => {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  if (isDataLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="pt-20 container mx-auto px-4 md:px-8 py-8">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   if (!dj) {
     return (
       <div className="min-h-screen bg-background">
@@ -181,6 +218,7 @@ const DJProfile = () => {
         <main className="pt-20 container mx-auto px-4 md:px-8 py-8">
           <div className="text-center">
             <h1 className="font-display text-4xl mb-4">DJ Not Found</h1>
+            <p className="text-muted-foreground mb-4">The video ID "{id}" was not found.</p>
             <Button onClick={() => navigate("/categories")}>
               Back to Categories
             </Button>
