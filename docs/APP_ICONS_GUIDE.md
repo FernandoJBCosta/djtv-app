@@ -1,6 +1,10 @@
 # App Icons & Splash Screen Setup Guide
 
-This guide explains how to add custom app icons and splash screens for iOS and Android.
+This guide explains how to add the DJTV logo as app icons and splash screens for iOS and Android.
+
+## Your Logo
+
+The DJTV logo is available at `public/app-icon.png` (downloaded from https://app.djtv.pt/Logo_DJTV.png).
 
 ## Prerequisites
 
@@ -86,14 +90,21 @@ plugins: {
 }
 ```
 
-## Using the DJTV Logo
+## Quick Setup with App Icon Generator
 
-The DJTV logo is available at `src/assets/djtv-logo.png`. Use this as your base for creating app icons and splash screens.
+The easiest way to generate all required icon sizes:
+
+1. Go to [App Icon Generator](https://appicon.co/) or [Icon Kitchen](https://icon.kitchen/)
+2. Upload `public/app-icon.png` (your DJTV logo)
+3. Set background color to `#0a0a0a` (DJTV dark theme)
+4. Download the generated icons
+5. Copy the iOS icons to `ios/App/App/Assets.xcassets/AppIcon.appiconset/`
+6. Copy the Android icons to `android/app/src/main/res/mipmap-*/`
 
 ### Recommended Design
 
 - **App Icon:** DJTV logo centered on dark background (#0a0a0a)
-- **Splash Screen:** DJTV logo centered, dark background, optional loading animation
+- **Splash Screen:** DJTV logo centered, dark background
 
 ## Programmatic Splash Screen Control
 
