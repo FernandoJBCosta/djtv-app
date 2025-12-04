@@ -9,6 +9,7 @@ export default function VideoPlayer() {
   const location = useLocation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastInteractionRef = useRef<number>(0);
   
   const videoUrl = location.state?.videoUrl || "";
   const title = location.state?.title || "Video";
@@ -136,6 +137,10 @@ export default function VideoPlayer() {
     if ((e.target as HTMLElement).closest('button')) {
       return;
     }
+    e.preventDefault();
+    const now = Date.now();
+    if (now - lastInteractionRef.current < 300) return;
+    lastInteractionRef.current = now;
     handleShowControls();
     togglePlay();
   }, [handleShowControls, togglePlay]);
@@ -144,6 +149,7 @@ export default function VideoPlayer() {
     <div 
       className="fixed inset-0 bg-black z-50"
       onMouseMove={handleShowControls}
+      onTouchEnd={handleContainerClick}
       onClick={handleContainerClick}
     >
       <video

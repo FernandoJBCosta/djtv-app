@@ -16,6 +16,7 @@ const DJProfile = () => {
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
+  const lastInteractionRef = useRef<number>(0);
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
@@ -152,6 +153,15 @@ const DJProfile = () => {
     }
   }, [isPlaying]);
 
+  const handleVideoClick = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    const now = Date.now();
+    if (now - lastInteractionRef.current < 300) return;
+    lastInteractionRef.current = now;
+    handleShowControls();
+    togglePlay();
+  }, [handleShowControls, togglePlay]);
+
   if (isDataLoading) {
     return (
       <div className="min-h-screen bg-background">
@@ -205,10 +215,8 @@ const DJProfile = () => {
           <div
             className="relative aspect-video bg-card rounded-xl overflow-hidden cursor-pointer"
             onMouseMove={handleShowControls}
-            onClick={() => {
-              handleShowControls();
-              togglePlay();
-            }}
+            onTouchEnd={handleVideoClick}
+            onClick={handleVideoClick}
           >
             <video
               ref={videoRef}
