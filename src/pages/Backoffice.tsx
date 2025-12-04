@@ -56,17 +56,86 @@ export default function Backoffice() {
   const [ftpSettings, setFtpSettings] = useState<FTPSettings>(getFTPSettings());
 
   useEffect(() => {
-    // Load from localStorage or use default data
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
+    // Auto-load from server on mount
+    const loadFromServer = async () => {
+      setIsLoadingFromServer(true);
       try {
-        setData(JSON.parse(saved));
-      } catch {
+        const url = `${PRODUCTION_XML_URL}?t=${Date.now()}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.status}`);
+        }
+
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        
+        // Parse carousel
+        const carouselData: CarouselItemData[] = [];
+        const lockups = xmlDoc.querySelectorAll("carousel section lockup");
+        lockups.forEach((lockup, index) => {
+          const img = lockup.querySelector("img");
+          if (img) {
+            carouselData.push({
+              id: `carousel-${index}`,
+              title: lockup.getAttribute("title") || undefined,
+              src: img.getAttribute("src") || "",
+              width: parseInt(img.getAttribute("width") || "1740"),
+              height: parseInt(img.getAttribute("height") || "500"),
+              isLive: lockup.getAttribute("islive") === "true",
+              videoUrl: lockup.getAttribute("videourl") || undefined,
+              videoId: lockup.getAttribute("videoid") || undefined,
+            });
+          }
+        });
+
+        // Parse categories
+        const categoryData: CategoryData[] = [];
+        const separators = xmlDoc.querySelectorAll("separator");
+        const shelves = xmlDoc.querySelectorAll("shelf");
+
+        separators.forEach((separator, index) => {
+          const button = separator.querySelector("button");
+          const name = button?.querySelector("text")?.textContent || "";
+          const documentUrl = button?.getAttribute("documenturl") || "";
+          const shelf = shelves[index];
+          const videos: XMLData["categories"][0]["videos"] = [];
+
+          if (shelf) {
+            shelf.querySelectorAll("lockup").forEach((lockup) => {
+              const img = lockup.querySelector("img");
+              videos.push({
+                id: lockup.getAttribute("videoid") || `video-${Date.now()}-${Math.random()}`,
+                title: lockup.querySelector("title")?.textContent || "",
+                description: lockup.querySelector("description")?.textContent || "",
+                thumbnail: img?.getAttribute("src") || "",
+                videoUrl: lockup.getAttribute("videourl") || "",
+                duration: lockup.getAttribute("duration") || "",
+              });
+            });
+          }
+
+          if (name) {
+            categoryData.push({
+              id: name.toLowerCase().replace(/\s+/g, "-"),
+              name,
+              documentUrl,
+              videos,
+            });
+          }
+        });
+
+        setData({ carousel: carouselData, categories: categoryData });
+      } catch (error) {
+        console.log("Using default data - server XML not available");
         setData(convertToEditorData());
+      } finally {
+        setIsLoadingFromServer(false);
       }
-    } else {
-      setData(convertToEditorData());
-    }
+    };
+    
+    loadFromServer();
   }, []);
 
   const handleSave = () => {
