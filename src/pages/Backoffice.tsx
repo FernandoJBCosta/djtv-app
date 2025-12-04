@@ -84,7 +84,7 @@ export default function Backoffice() {
       const xml = generateXML(data);
       const response = await supabase.functions.invoke('ftp-upload', {
         method: 'POST',
-        body: { xml, path: '/public_html/content/index.xml' },
+        body: { xml, path: '/content/index.xml' },
         headers: {
           'x-admin-password': ADMIN_PASSWORD,
         },
