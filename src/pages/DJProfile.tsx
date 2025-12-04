@@ -205,8 +205,10 @@ const DJProfile = () => {
           <div
             className="relative aspect-video bg-card rounded-xl overflow-hidden cursor-pointer"
             onMouseMove={handleShowControls}
-            onTouchStart={handleShowControls}
-            onClick={togglePlay}
+            onClick={() => {
+              handleShowControls();
+              togglePlay();
+            }}
           >
             <video
               ref={videoRef}
@@ -240,13 +242,9 @@ const DJProfile = () => {
             {/* Play/Pause Button Overlay */}
             {!isLoading && !error && (
               <div 
-                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-                  !isPlaying || showControls ? "opacity-100" : "opacity-0 pointer-events-none"
+                className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${
+                  !isPlaying || showControls ? "opacity-100" : "opacity-0"
                 }`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  togglePlay();
-                }}
               >
                 <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary/80 flex items-center justify-center shadow-lg">
                   {isPlaying ? (
