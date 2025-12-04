@@ -32,7 +32,7 @@ export function generateXML(data: XMLData): string {
   data.categories.forEach((category) => {
     xml += `  <!-- Category: ${escapeXml(category.name)} -->
   <separator>
-    <button documenturl="${escapeXml(category.documentUrl)}">
+    <button>
       <text>${escapeXml(category.name)}</text>
     </button>
   </separator>

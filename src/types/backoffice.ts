@@ -21,7 +21,6 @@ export interface VideoData {
 export interface CategoryData {
   id: string;
   name: string;
-  documentUrl: string;
   videos: VideoData[];
 }
 

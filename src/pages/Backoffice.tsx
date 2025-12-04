@@ -119,7 +119,6 @@ export default function Backoffice() {
             categoryData.push({
               id: name.toLowerCase().replace(/\s+/g, "-"),
               name,
-              documentUrl,
               videos,
             });
           }
@@ -251,7 +250,6 @@ export default function Backoffice() {
           categoryData.push({
             id: name.toLowerCase().replace(/\s+/g, "-"),
             name,
-            documentUrl,
             videos,
           });
         }
@@ -327,7 +325,6 @@ export default function Backoffice() {
             categoryData.push({
               id: name.toLowerCase().replace(/\s+/g, "-"),
               name,
-              documentUrl,
               videos,
             });
           }
