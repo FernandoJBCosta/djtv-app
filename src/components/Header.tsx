@@ -29,12 +29,12 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 pt-[env(safe-area-inset-top)]",
         scrolled ? "bg-background/95 backdrop-blur-md" : "bg-gradient-to-b from-background/80 to-transparent",
       )}
     >
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="container mx-auto px-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] md:px-8">
+        <div className="flex items-center justify-between h-14 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img src={djtvLogo} alt="DJTV" className="h-14 sm:h-16 md:h-20 w-auto" />
@@ -90,7 +90,7 @@ export function Header() {
       {/* Mobile Menu Slide-in */}
       <div 
         className={cn(
-          "md:hidden fixed top-0 right-0 h-full w-64 bg-background/95 backdrop-blur-md border-l border-border z-50 transition-transform duration-300 ease-out",
+          "md:hidden fixed top-0 right-0 h-full w-64 bg-background/95 backdrop-blur-md border-l border-border z-50 transition-transform duration-300 ease-out pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)]",
           menuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
