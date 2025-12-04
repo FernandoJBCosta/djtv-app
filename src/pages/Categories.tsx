@@ -1,11 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { VideoCard } from "@/components/VideoCard";
-import { categories } from "@/data/djtvData";
+import { categories as defaultCategories } from "@/data/djtvData";
+import { fetchAndParseXML } from "@/services/xmlParser";
+import { Category } from "@/types/video";
 import { cn } from "@/lib/utils";
 
+const SERVER_XML_URL = "https://app.djtv.pt/content/index.xml";
+
 const Categories = () => {
+  const [categories, setCategories] = useState<Category[]>(defaultCategories);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const url = `${SERVER_XML_URL}?t=${Date.now()}`;
+        const data = await fetchAndParseXML(url);
+        if (data.categories.length > 0) {
+          setCategories(data.categories);
+        }
+      } catch (error) {
+        console.log("Using default data - server XML not available");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
   const filteredCategories = activeCategory
     ? categories.filter((cat) => cat.id === activeCategory)
