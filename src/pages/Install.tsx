@@ -64,9 +64,11 @@ export default function Install() {
         <div className="max-w-2xl mx-auto text-center">
           {/* Hero Section */}
           <div className="mb-12">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/20">
-              <Download className="w-10 h-10 text-primary-foreground" />
-            </div>
+            <img 
+              src="/app-icon.png" 
+              alt="DJTV" 
+              className="w-32 h-32 mx-auto mb-6 rounded-2xl shadow-lg shadow-primary/20"
+            />
             <h1 className="text-3xl md:text-4xl font-bold mb-4">Install DJTV App</h1>
             <p className="text-muted-foreground text-lg">
               Get the full app experience with offline access, faster loading, and instant access from your home screen.
