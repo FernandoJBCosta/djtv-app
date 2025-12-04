@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { X, Play, Pause, Volume2, VolumeX, Maximize, Minimize } from "lucide-react";
+import { X, Play, Pause } from "lucide-react";
 import { Button } from "./ui/button";
-import { Slider } from "./ui/slider";
 import { Video } from "@/types/video";
 import Hls from "hls.js";
 
@@ -12,29 +11,12 @@ interface VideoPlayerProps {
 
 export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const hlsRef = useRef<Hls | null>(null);
   
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(1);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile device
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // Generate video URL based on DJ name
   const getVideoUrl = () => {
@@ -64,12 +46,6 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         setIsLoading(false);
         setError(null);
-        // On mobile, don't autoplay - let user tap to play
-        if (!isMobile) {
-          videoElement.play().catch(() => {
-            setIsPlaying(false);
-          });
-        }
       });
 
       hls.on(Hls.Events.ERROR, (_, data) => {
@@ -77,7 +53,6 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
           switch (data.type) {
             case Hls.ErrorTypes.NETWORK_ERROR:
               setError("Network error - stream unavailable");
-              // Retry loading after a delay
               setTimeout(() => {
                 hls.startLoad();
               }, 2000);
@@ -124,29 +99,23 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
         hlsRef.current.destroy();
       }
     };
-  }, [video, isMobile]);
+  }, [video]);
 
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
-    const handleTimeUpdate = () => setCurrentTime(videoElement.currentTime);
-    const handleDurationChange = () => setDuration(videoElement.duration);
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
     const handleWaiting = () => setIsLoading(true);
     const handleCanPlay = () => setIsLoading(false);
 
-    videoElement.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement.addEventListener("durationchange", handleDurationChange);
     videoElement.addEventListener("play", handlePlay);
     videoElement.addEventListener("pause", handlePause);
     videoElement.addEventListener("waiting", handleWaiting);
     videoElement.addEventListener("canplay", handleCanPlay);
 
     return () => {
-      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
-      videoElement.removeEventListener("durationchange", handleDurationChange);
       videoElement.removeEventListener("play", handlePlay);
       videoElement.removeEventListener("pause", handlePause);
       videoElement.removeEventListener("waiting", handleWaiting);
@@ -162,19 +131,6 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
     }
     return () => clearTimeout(timeout);
   }, [showControls, isPlaying]);
-
-  // Listen for fullscreen changes
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-    };
-  }, []);
 
   const handleShowControls = useCallback(() => {
     setShowControls(true);
@@ -192,70 +148,7 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
     }
   }, [isPlaying]);
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  const handleVolumeChange = (value: number[]) => {
-    if (videoRef.current) {
-      const newVolume = value[0];
-      videoRef.current.volume = newVolume;
-      setVolume(newVolume);
-      setIsMuted(newVolume === 0);
-    }
-  };
-
-  const handleSeek = (value: number[]) => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = value[0];
-    }
-  };
-
-  const toggleFullscreen = () => {
-    const videoElement = videoRef.current;
-    const container = containerRef.current;
-    
-    if (!container || !videoElement) return;
-
-    // iOS Safari requires fullscreen on the video element itself
-    if (isMobile && (videoElement as any).webkitEnterFullscreen) {
-      if (!isFullscreen) {
-        (videoElement as any).webkitEnterFullscreen();
-      }
-      return;
-    }
-
-    if (!isFullscreen) {
-      if (container.requestFullscreen) {
-        container.requestFullscreen();
-      } else if ((container as any).webkitRequestFullscreen) {
-        (container as any).webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if ((document as any).webkitExitFullscreen) {
-        (document as any).webkitExitFullscreen();
-      }
-    }
-  };
-
-  const formatTime = (time: number) => {
-    if (!isFinite(time) || isNaN(time)) return "0:00";
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time % 3600) / 60);
-    const seconds = Math.floor(time % 60);
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    }
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-  };
-
   const handleContainerClick = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    // Prevent toggling play when clicking on controls
     if ((e.target as HTMLElement).closest('.video-controls')) {
       return;
     }
@@ -277,7 +170,6 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
 
       {/* Video Container */}
       <div
-        ref={containerRef}
         className="w-full h-full flex items-center justify-center"
         onMouseMove={handleShowControls}
         onTouchStart={handleShowControls}
@@ -304,11 +196,17 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
           </div>
         )}
 
-        {/* Play Button Overlay (for mobile) */}
-        {!isPlaying && !isLoading && !error && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary/80 flex items-center justify-center">
-              <Play className="w-10 h-10 md:w-12 md:h-12 text-white ml-1" />
+        {/* Play/Pause Button Overlay */}
+        {!isLoading && !error && (
+          <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${
+            !isPlaying || showControls ? "opacity-100" : "opacity-0"
+          }`}>
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-primary/80 flex items-center justify-center shadow-lg">
+              {isPlaying ? (
+                <Pause className="w-10 h-10 md:w-12 md:h-12 text-white" />
+              ) : (
+                <Play className="w-10 h-10 md:w-12 md:h-12 text-white ml-1" />
+              )}
             </div>
           </div>
         )}
@@ -341,75 +239,6 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
             </div>
           </div>
         )}
-
-        {/* Video Controls */}
-        <div
-          className={`video-controls absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 md:p-4 transition-opacity duration-300 ${
-            showControls ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-          onClick={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
-        >
-          {/* Progress Bar */}
-          <div className="mb-3 md:mb-4">
-            <Slider
-              value={[currentTime]}
-              max={duration || 100}
-              step={0.1}
-              onValueChange={handleSeek}
-              className="cursor-pointer touch-none"
-            />
-          </div>
-
-          <div className="flex items-center justify-between gap-2">
-            {/* Left Controls */}
-            <div className="flex items-center gap-2 md:gap-4">
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={togglePlay} 
-                className="text-white hover:bg-white/20 w-10 h-10 md:w-10 md:h-10"
-              >
-                {isPlaying ? <Pause className="w-5 h-5 md:w-6 md:h-6" /> : <Play className="w-5 h-5 md:w-6 md:h-6" />}
-              </Button>
-
-              {/* Volume controls - hide on mobile since they don't work */}
-              {!isMobile && (
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="icon" onClick={toggleMute} className="text-white hover:bg-white/20">
-                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                  </Button>
-                  <Slider
-                    value={[isMuted ? 0 : volume]}
-                    max={1}
-                    step={0.1}
-                    onValueChange={handleVolumeChange}
-                    className="w-24"
-                  />
-                </div>
-              )}
-
-              <span className="text-white text-xs md:text-sm whitespace-nowrap">
-                {formatTime(currentTime)} / {formatTime(duration || 0)}
-              </span>
-            </div>
-
-            {/* Right Controls */}
-            <div className="flex items-center gap-1 md:gap-2">
-              <span className="text-white text-xs md:text-sm font-display hidden sm:block truncate max-w-[150px]">
-                {video.title}
-              </span>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={toggleFullscreen} 
-                className="text-white hover:bg-white/20 w-10 h-10"
-              >
-                {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
-              </Button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
