@@ -9,6 +9,7 @@ import VideoPlayer from "./pages/VideoPlayer";
 import Categories from "./pages/Categories";
 import DJProfile from "./pages/DJProfile";
 import Backoffice from "./pages/Backoffice";
+import Install from "./pages/Install";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/video" element={<VideoPlayer />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/dj/:id" element={<DJProfile />} />
+          <Route path="/install" element={<Install />} />
           <Route path="/backoffice" element={<Backoffice />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

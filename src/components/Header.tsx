@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Instagram, Facebook } from "lucide-react";
+import { Search, Menu, X, Instagram, Facebook, Download } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import djtvLogo from "@/assets/djtv-logo.png";
@@ -23,6 +23,7 @@ export function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/categories", label: "Categories" },
+    { href: "/install", label: "Install App", icon: Download },
   ];
 
   return (
@@ -46,10 +47,11 @@ export function Header() {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "transition-colors font-medium",
+                  "transition-colors font-medium flex items-center gap-1.5",
                   location.pathname === link.href ? "text-primary" : "text-foreground/80 hover:text-primary",
                 )}
               >
+                {link.icon && <link.icon className="w-4 h-4" />}
                 {link.label}
               </Link>
             ))}
@@ -109,12 +111,13 @@ export function Header() {
               to={link.href}
               onClick={() => setMenuOpen(false)}
               className={cn(
-                "transition-colors font-medium py-3 px-4 rounded-lg",
+                "transition-colors font-medium py-3 px-4 rounded-lg flex items-center gap-2",
                 location.pathname === link.href 
                   ? "text-primary bg-primary/10" 
                   : "text-foreground/80 hover:text-primary hover:bg-muted"
               )}
             >
+              {link.icon && <link.icon className="w-4 h-4" />}
               {link.label}
             </Link>
           ))}
