@@ -11,10 +11,10 @@ export default function Settings() {
     <MobileLayout>
       <div className="min-h-screen bg-background pb-24">
         <Header />
-        
+
         <main className="pt-24 md:pt-28 px-4 md:px-8 max-w-2xl mx-auto">
           <h1 className="text-2xl font-bold text-foreground mb-6">Settings</h1>
-          
+
           {/* About Section */}
           <section className="mb-8">
             <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">About</h2>
@@ -24,12 +24,14 @@ export default function Settings() {
                   <Info className="w-5 h-5 text-primary" />
                   <span className="text-foreground">Version</span>
                 </div>
-                <span className="text-muted-foreground">{APP_VERSION} ({BUILD_NUMBER})</span>
+                <span className="text-muted-foreground">
+                  {APP_VERSION} ({BUILD_NUMBER})
+                </span>
               </div>
-              
-              <a 
-                href="https://djtv.pt" 
-                target="_blank" 
+
+              <a
+                href="https://djtv.pt"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
               >
@@ -39,8 +41,8 @@ export default function Settings() {
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </a>
-              
-              <a 
+
+              <a
                 href="mailto:hello@djtv.pt"
                 className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
               >
@@ -52,14 +54,14 @@ export default function Settings() {
               </a>
             </div>
           </section>
-          
+
           {/* Legal Section */}
           <section className="mb-8">
             <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Legal</h2>
             <div className="bg-card rounded-xl border border-border overflow-hidden">
-              <a 
-                href="https://djtv.pt/privacy" 
-                target="_blank" 
+              <a
+                href="https://djtv.pt/privacy"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
               >
@@ -69,10 +71,10 @@ export default function Settings() {
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </a>
-              
-              <a 
-                href="https://djtv.pt/terms" 
-                target="_blank" 
+
+              <a
+                href="https://djtv.pt/terms"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
               >
@@ -84,14 +86,14 @@ export default function Settings() {
               </a>
             </div>
           </section>
-          
+
           {/* Social Media Section */}
           <section className="mb-8">
             <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Follow Us</h2>
             <div className="bg-card rounded-xl border border-border overflow-hidden">
-              <a 
-                href="https://instagram.com/djtv.pt" 
-                target="_blank" 
+              <a
+                href="https://instagram.com/djtv.pt"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
               >
@@ -101,10 +103,10 @@ export default function Settings() {
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </a>
-              
-              <a 
-                href="https://facebook.com/djtv.pt" 
-                target="_blank" 
+
+              <a
+                href="https://facebook.com/djtv.pt"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
               >
@@ -114,22 +116,9 @@ export default function Settings() {
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </a>
-              
-              <a 
-                href="https://youtube.com/@djtv" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <Youtube className="w-5 h-5 text-primary" />
-                  <span className="text-foreground">YouTube</span>
-                </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </a>
             </div>
           </section>
-          
+
           {/* App Info */}
           <div className="text-center text-muted-foreground text-sm mt-12">
             <img src={djtvLogo} alt="DJTV Logo" className="h-12 mx-auto mb-3" />
