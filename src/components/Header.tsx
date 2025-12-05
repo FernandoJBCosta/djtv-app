@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Instagram, Facebook, Download, LucideIcon } from "lucide-react";
+import { Search, Menu, X, Instagram, Facebook, Download, Settings, LucideIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { SearchModal } from "./SearchModal";
@@ -38,6 +38,9 @@ export function Header() {
     if (!isNativeApp) {
       links.push({ href: "/install", label: "Install App", icon: Download });
     }
+    
+    // Add Settings
+    links.push({ href: "/settings", label: "Settings", icon: Settings });
     
     return links;
   }, [isNativeApp]);

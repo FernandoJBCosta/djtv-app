@@ -11,6 +11,7 @@ import Categories from "./pages/Categories";
 import DJProfile from "./pages/DJProfile";
 import Backoffice from "./pages/Backoffice";
 import Install from "./pages/Install";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import SplashScreen from "./components/SplashScreen";
 
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/categories" element={<Categories />} />
             <Route path="/dj/:id" element={<DJProfile />} />
             <Route path="/install" element={<Install />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/backoffice" element={<Backoffice />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
