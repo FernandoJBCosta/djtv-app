@@ -40,7 +40,7 @@ export default function Settings() {
               </a>
               
               <a 
-                href="mailto:info@djtv.pt"
+                href="mailto:hello@djtv.pt"
                 className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
