@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { ChevronRight, Info, Shield, FileText, Mail } from "lucide-react";
+import { ChevronRight, Info, Shield, FileText, Mail, Instagram, Facebook, Youtube } from "lucide-react";
 import { MobileLayout } from "@/components/MobileLayout";
 import djtvLogo from "@/assets/djtv-logo.png";
 
@@ -79,6 +79,51 @@ export default function Settings() {
                 <div className="flex items-center gap-3">
                   <FileText className="w-5 h-5 text-primary" />
                   <span className="text-foreground">Terms of Service</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </a>
+            </div>
+          </section>
+          
+          {/* Social Media Section */}
+          <section className="mb-8">
+            <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Follow Us</h2>
+            <div className="bg-card rounded-xl border border-border overflow-hidden">
+              <a 
+                href="https://instagram.com/djtv.pt" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <Instagram className="w-5 h-5 text-primary" />
+                  <span className="text-foreground">Instagram</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </a>
+              
+              <a 
+                href="https://facebook.com/djtv.pt" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <Facebook className="w-5 h-5 text-primary" />
+                  <span className="text-foreground">Facebook</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </a>
+              
+              <a 
+                href="https://youtube.com/@djtv" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <Youtube className="w-5 h-5 text-primary" />
+                  <span className="text-foreground">YouTube</span>
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </a>
