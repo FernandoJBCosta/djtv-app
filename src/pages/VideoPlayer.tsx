@@ -5,13 +5,10 @@ import {
   ArrowLeft, 
   Play, 
   Pause, 
-  Volume2, 
-  VolumeX,
   Maximize,
   Minimize
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 
 export default function VideoPlayer() {
   const navigate = useNavigate();
@@ -24,14 +21,13 @@ export default function VideoPlayer() {
   const title = location.state?.title || "Video";
   
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSeeking, setIsSeeking] = useState(false);
 
   useEffect(() => {
     if (!videoUrl) {
@@ -94,7 +90,11 @@ export default function VideoPlayer() {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleTimeUpdate = () => setCurrentTime(video.currentTime);
+    const handleTimeUpdate = () => {
+      if (!isSeeking) {
+        setCurrentTime(video.currentTime);
+      }
+    };
     const handleDurationChange = () => setDuration(video.duration);
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
@@ -149,30 +149,23 @@ export default function VideoPlayer() {
     }
   };
 
-  const toggleMute = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    
-    video.muted = !isMuted;
-    setIsMuted(!isMuted);
+  const handleSeekStart = () => {
+    setIsSeeking(true);
   };
 
-  const handleVolumeChange = (value: number[]) => {
-    const video = videoRef.current;
-    if (!video) return;
-    
-    const newVolume = value[0];
-    video.volume = newVolume;
-    setVolume(newVolume);
-    setIsMuted(newVolume === 0);
+  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    setCurrentTime(value);
   };
 
-  const handleSeek = (value: number[]) => {
+  const handleSeekEnd = (e: React.MouseEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
     const video = videoRef.current;
     if (!video) return;
     
-    video.currentTime = value[0];
-    setCurrentTime(value[0]);
+    const input = e.target as HTMLInputElement;
+    const value = parseFloat(input.value);
+    video.currentTime = value;
+    setIsSeeking(false);
   };
 
   const toggleFullscreen = () => {
@@ -263,12 +256,21 @@ export default function VideoPlayer() {
       >
         {/* Progress Bar */}
         <div className="mb-4">
-          <Slider
-            value={[currentTime]}
+          <input
+            type="range"
+            min={0}
             max={duration || 100}
-            step={1}
-            onValueChange={handleSeek}
-            className="cursor-pointer"
+            step={0.1}
+            value={currentTime}
+            onChange={handleSeekChange}
+            onMouseDown={handleSeekStart}
+            onMouseUp={handleSeekEnd}
+            onTouchStart={handleSeekStart}
+            onTouchEnd={handleSeekEnd}
+            className="w-full h-1 bg-white/30 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary"
+            style={{
+              background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${(currentTime / (duration || 100)) * 100}%, rgba(255,255,255,0.3) ${(currentTime / (duration || 100)) * 100}%, rgba(255,255,255,0.3) 100%)`
+            }}
           />
         </div>
 
@@ -282,24 +284,6 @@ export default function VideoPlayer() {
             >
               {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
             </Button>
-
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-foreground hover:bg-white/20"
-                onClick={toggleMute}
-              >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-              </Button>
-              <Slider
-                value={[isMuted ? 0 : volume]}
-                max={1}
-                step={0.1}
-                onValueChange={handleVolumeChange}
-                className="w-24"
-              />
-            </div>
 
             <span className="text-foreground text-sm">
               {formatTime(currentTime)} / {formatTime(duration)}
