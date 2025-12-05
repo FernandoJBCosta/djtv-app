@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Search, Menu, X, Instagram, Facebook, Download } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import djtvLogo from "@/assets/djtv-logo.png";
 import { SearchModal } from "./SearchModal";
 
 export function Header() {
@@ -35,9 +34,9 @@ export function Header() {
     >
       <div className="container mx-auto px-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] md:px-8">
         <div className="flex items-center justify-between h-14 md:h-20">
-          {/* Logo */}
+          {/* Empty space where logo was */}
           <Link to="/" className="flex items-center">
-            <img src={djtvLogo} alt="DJTV" className="h-14 sm:h-16 md:h-20 w-auto" />
+            <span className="sr-only">DJTV Home</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -94,8 +93,7 @@ export function Header() {
           menuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <img src={djtvLogo} alt="DJTV" className="h-10 w-auto" />
+        <div className="flex items-center justify-end p-4 border-b border-border">
           <Button
             variant="ghost"
             size="icon"
