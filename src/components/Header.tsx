@@ -86,85 +86,90 @@ export function Header() {
             >
               <Search className="w-5 h-5" />
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden text-foreground/80"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
+            {/* Only show hamburger menu on web mobile, not in native app */}
+            {!isNativeApp && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-foreground/80"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </Button>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {menuOpen && (
+      {/* Mobile Menu Overlay - only for web */}
+      {!isNativeApp && menuOpen && (
         <div 
           className="md:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setMenuOpen(false)}
         />
       )}
 
-      {/* Mobile Menu Slide-in */}
-      <div 
-        className={cn(
-          "md:hidden fixed top-0 right-0 h-full w-64 bg-background/95 backdrop-blur-md border-l border-border z-50 transition-transform duration-300 ease-out pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)]",
-          menuOpen ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        <div className="flex items-center justify-end p-4 border-b border-border">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-foreground/80"
-            onClick={() => setMenuOpen(false)}
-          >
-            <X className="w-5 h-5" />
-          </Button>
-        </div>
-        <nav className="px-6 py-4 flex flex-col gap-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
+      {/* Mobile Menu Slide-in - only for web */}
+      {!isNativeApp && (
+        <div 
+          className={cn(
+            "md:hidden fixed top-0 right-0 h-full w-64 bg-background/95 backdrop-blur-md border-l border-border z-50 transition-transform duration-300 ease-out pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)]",
+            menuOpen ? "translate-x-0" : "translate-x-full"
+          )}
+        >
+          <div className="flex items-center justify-end p-4 border-b border-border">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-foreground/80"
               onClick={() => setMenuOpen(false)}
-              className={cn(
-                "transition-colors font-medium py-3 px-4 rounded-lg flex items-center gap-2",
-                location.pathname === link.href 
-                  ? "text-primary bg-primary/10" 
-                  : "text-foreground/80 hover:text-primary hover:bg-muted"
-              )}
             >
-              {link.icon && <link.icon className="w-4 h-4" />}
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        
-        {/* Social Media Links */}
-        <div className="px-6 mt-auto pb-8 border-t border-border pt-6">
-          <p className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">Follow Us</p>
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://www.instagram.com/djtv_pt/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-foreground/60 hover:text-primary transition-colors"
-            >
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a 
-              href="https://www.facebook.com/DJTV.PT" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-foreground/60 hover:text-primary transition-colors"
-            >
-              <Facebook className="w-5 h-5" />
-            </a>
+              <X className="w-5 h-5" />
+            </Button>
+          </div>
+          <nav className="px-6 py-4 flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setMenuOpen(false)}
+                className={cn(
+                  "transition-colors font-medium py-3 px-4 rounded-lg flex items-center gap-2",
+                  location.pathname === link.href 
+                    ? "text-primary bg-primary/10" 
+                    : "text-foreground/80 hover:text-primary hover:bg-muted"
+                )}
+              >
+                {link.icon && <link.icon className="w-4 h-4" />}
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          
+          {/* Social Media Links */}
+          <div className="px-6 mt-auto pb-8 border-t border-border pt-6">
+            <p className="text-xs text-muted-foreground mb-4 uppercase tracking-wider">Follow Us</p>
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://www.instagram.com/djtv_pt/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.facebook.com/DJTV.PT" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
