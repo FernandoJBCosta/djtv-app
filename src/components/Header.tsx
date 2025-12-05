@@ -16,9 +16,26 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isLandscape, setIsLandscape] = useState(false);
   const location = useLocation();
   
   const isNativeApp = Capacitor.isNativePlatform();
+
+  // Detect landscape orientation
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+    
+    checkOrientation();
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+    
+    return () => {
+      window.removeEventListener("resize", checkOrientation);
+      window.removeEventListener("orientationchange", checkOrientation);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +44,11 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  
+  // Hide header in landscape mode on native app
+  if (isNativeApp && isLandscape) {
+    return null;
+  }
 
   const navLinks: NavLink[] = useMemo(() => {
     const links: NavLink[] = [
