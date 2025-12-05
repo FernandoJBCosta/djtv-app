@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { ChevronRight, Info, Shield, FileText, Mail } from "lucide-react";
 import { MobileLayout } from "@/components/MobileLayout";
+import djtvLogo from "@/assets/djtv-logo.png";
 
 const APP_VERSION = "2.0";
 const BUILD_NUMBER = "1";
@@ -86,7 +87,7 @@ export default function Settings() {
           
           {/* App Info */}
           <div className="text-center text-muted-foreground text-sm mt-12">
-            <p>DJTV</p>
+            <img src={djtvLogo} alt="DJTV Logo" className="h-12 mx-auto mb-3" />
             <p className="mt-1">© {new Date().getFullYear()} DJTV. All rights reserved.</p>
           </div>
         </main>
