@@ -37,7 +37,6 @@ function convertToEditorData(): XMLData {
       description: video.description,
       thumbnail: video.thumbnail,
       videoUrl: video.videoUrl,
-      duration: video.duration,
     })),
   }));
 
@@ -110,7 +109,6 @@ export default function Backoffice() {
                 description: lockup.querySelector("description")?.textContent || "",
                 thumbnail: img?.getAttribute("src") || "",
                 videoUrl: lockup.getAttribute("videourl") || "",
-                duration: lockup.getAttribute("duration") || "",
               });
             });
           }
@@ -241,7 +239,6 @@ export default function Backoffice() {
               description: lockup.querySelector("description")?.textContent || "",
               thumbnail: img?.getAttribute("src") || "",
               videoUrl: lockup.getAttribute("videourl") || "",
-              duration: lockup.getAttribute("duration") || "",
             });
           });
         }
@@ -316,7 +313,6 @@ export default function Backoffice() {
                 description: lockup.querySelector("description")?.textContent || "",
                 thumbnail: img?.getAttribute("src") || "",
                 videoUrl: lockup.getAttribute("videourl") || "",
-                duration: lockup.getAttribute("duration") || "",
               });
             });
           }
