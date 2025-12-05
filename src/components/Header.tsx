@@ -1,15 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Instagram, Facebook, Download } from "lucide-react";
+import { Search, Menu, X, Instagram, Facebook, Download, LucideIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { SearchModal } from "./SearchModal";
+import { Capacitor } from "@capacitor/core";
+
+interface NavLink {
+  href: string;
+  label: string;
+  icon?: LucideIcon;
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
+  
+  const isNativeApp = Capacitor.isNativePlatform();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +28,19 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/categories", label: "Categories" },
-    { href: "/install", label: "Install App", icon: Download },
-  ];
+  const navLinks: NavLink[] = useMemo(() => {
+    const links: NavLink[] = [
+      { href: "/", label: "Home" },
+      { href: "/categories", label: "Categories" },
+    ];
+    
+    // Only show Install App on web, not in native apps
+    if (!isNativeApp) {
+      links.push({ href: "/install", label: "Install App", icon: Download });
+    }
+    
+    return links;
+  }, [isNativeApp]);
 
   return (
     <header
