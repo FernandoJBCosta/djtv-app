@@ -42,7 +42,6 @@ export function CategoryEditor({ categories, onChange }: CategoryEditorProps) {
       description: "",
       thumbnail: "",
       videoUrl: "",
-      duration: "",
     };
     onChange(
       categories.map((cat) =>
@@ -209,14 +208,6 @@ export function CategoryEditor({ categories, onChange }: CategoryEditorProps) {
                                   onChange={(e) => updateVideo(category.id, video.id, { videoUrl: e.target.value })}
                                 />
                               </div>
-                            </div>
-                            <div className="space-y-2">
-                              <Label className="text-xs">Duration (e.g., 1:45:30)</Label>
-                              <Input
-                                value={video.duration}
-                                onChange={(e) => updateVideo(category.id, video.id, { duration: e.target.value })}
-                                className="w-32"
-                              />
                             </div>
                             {video.thumbnail && (
                               <div>

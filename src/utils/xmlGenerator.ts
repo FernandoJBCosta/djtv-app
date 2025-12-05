@@ -40,8 +40,7 @@ export function generateXML(data: XMLData): string {
 `;
 
     category.videos.forEach((video) => {
-      const durationAttr = video.duration ? ` duration="${escapeXml(video.duration)}"` : "";
-      xml += `    <lockup videourl="${escapeXml(video.videoUrl)}" videoid="${escapeXml(video.id)}"${durationAttr}>
+      xml += `    <lockup videourl="${escapeXml(video.videoUrl)}" videoid="${escapeXml(video.id)}">
       <img src="${escapeXml(video.thumbnail)}" width="400" height="225" />
       <title>${escapeXml(video.title)}</title>
       <description>${escapeXml(video.description)}</description>

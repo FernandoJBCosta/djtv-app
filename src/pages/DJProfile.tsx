@@ -66,6 +66,22 @@ const DJProfile = () => {
       return;
     }
 
+    // Set up event listeners before loading
+    const handleTimeUpdate = () => setCurrentTime(videoElement.currentTime);
+    const handleDurationChange = () => setDuration(videoElement.duration);
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleLoadedMetadata = () => {
+      setIsLoading(false);
+      setDuration(videoElement.duration);
+    };
+
+    videoElement.addEventListener("timeupdate", handleTimeUpdate);
+    videoElement.addEventListener("durationchange", handleDurationChange);
+    videoElement.addEventListener("play", handlePlay);
+    videoElement.addEventListener("pause", handlePause);
+    videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+
     if (Hls.isSupported()) {
       const hls = new Hls({
         enableWorker: true,
@@ -99,42 +115,23 @@ const DJProfile = () => {
       });
     } else if (videoElement.canPlayType("application/vnd.apple.mpegurl")) {
       videoElement.src = videoUrl;
-      videoElement.addEventListener("loadedmetadata", () => {
-        setIsLoading(false);
-      });
     } else {
       setError("HLS not supported in this browser");
       setIsLoading(false);
     }
 
     return () => {
+      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
+      videoElement.removeEventListener("durationchange", handleDurationChange);
+      videoElement.removeEventListener("play", handlePlay);
+      videoElement.removeEventListener("pause", handlePause);
+      videoElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
       if (hlsRef.current) {
         hlsRef.current.destroy();
       }
     };
   }, [dj]);
 
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    const handleTimeUpdate = () => setCurrentTime(videoElement.currentTime);
-    const handleDurationChange = () => setDuration(videoElement.duration);
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-
-    videoElement.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement.addEventListener("durationchange", handleDurationChange);
-    videoElement.addEventListener("play", handlePlay);
-    videoElement.addEventListener("pause", handlePause);
-
-    return () => {
-      videoElement.removeEventListener("timeupdate", handleTimeUpdate);
-      videoElement.removeEventListener("durationchange", handleDurationChange);
-      videoElement.removeEventListener("play", handlePlay);
-      videoElement.removeEventListener("pause", handlePause);
-    };
-  }, []);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
