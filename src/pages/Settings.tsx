@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { ChevronRight, Info, Shield, FileText, Mail } from "lucide-react";
 import { MobileLayout } from "@/components/MobileLayout";
 
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "2.0";
 const BUILD_NUMBER = "1";
 
 export default function Settings() {
