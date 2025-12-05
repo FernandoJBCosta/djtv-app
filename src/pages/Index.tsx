@@ -5,6 +5,7 @@ import { ContentRow } from "@/components/ContentRow";
 import { carouselItems as defaultCarouselItems, categories as defaultCategories } from "@/data/djtvData";
 import { fetchAndParseXML } from "@/services/xmlParser";
 import { CarouselItem, Category } from "@/types/video";
+import { MobileLayout } from "@/components/MobileLayout";
 
 const SERVER_XML_URL = "https://app.djtv.pt/content/index.xml";
 
@@ -37,22 +38,24 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <main>
-        <Carousel items={carouselItems} />
+    <MobileLayout>
+      <div className="min-h-screen bg-background pb-20">
+        <Header />
         
-        <div className="relative z-10 pb-20">
-          {categories.map((category) => (
-            <ContentRow
-              key={category.id}
-              category={category}
-            />
-          ))}
-        </div>
-      </main>
-    </div>
+        <main>
+          <Carousel items={carouselItems} />
+          
+          <div className="relative z-10 pb-20">
+            {categories.map((category) => (
+              <ContentRow
+                key={category.id}
+                category={category}
+              />
+            ))}
+          </div>
+        </main>
+      </div>
+    </MobileLayout>
   );
 };
 
