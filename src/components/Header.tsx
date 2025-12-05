@@ -13,12 +13,17 @@ interface NavLink {
 }
 
 export function Header() {
+  const isNativeApp = Capacitor.isNativePlatform();
+  
+  // Hide header completely in native app - navigation is in bottom nav
+  if (isNativeApp) {
+    return null;
+  }
+  
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
-  
-  const isNativeApp = Capacitor.isNativePlatform();
 
   useEffect(() => {
     const handleScroll = () => {
