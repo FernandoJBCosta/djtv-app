@@ -175,7 +175,7 @@ export function Carousel({ items }: CarouselProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 hover:bg-background/70"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 hover:bg-background/70 [@media(hover:none)]:hidden"
         onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
       >
         <ChevronLeft className="w-8 h-8" />
@@ -183,7 +183,7 @@ export function Carousel({ items }: CarouselProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 hover:bg-background/70"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-background/50 hover:bg-background/70 [@media(hover:none)]:hidden"
         onClick={(e) => { e.stopPropagation(); goToNext(); }}
       >
         <ChevronRight className="w-8 h-8" />
