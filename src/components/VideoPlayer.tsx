@@ -25,19 +25,12 @@ export function VideoPlayer({ video, onClose }: VideoPlayerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Generate video URL based on DJ name
-  const getVideoUrl = () => {
-    if (video.videoUrl) return video.videoUrl;
-    // Generate HLS URL from DJ name - adjust pattern based on your Flussonic setup
-    const djSlug = video.title.toLowerCase().replace(/[^a-z0-9]/g, "_");
-    return `https://playout.djtv.pt/${djSlug}/index.m3u8`;
-  };
-
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
-    const videoUrl = getVideoUrl();
+    const djSlug = video.title.toLowerCase().replace(/[^a-z0-9]/g, "_");
+    const videoUrl = video.videoUrl || `https://playout.djtv.pt/${djSlug}/index.m3u8`;
 
     if (Hls.isSupported()) {
       const hls = new Hls({

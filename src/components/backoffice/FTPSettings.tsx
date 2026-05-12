@@ -41,6 +41,7 @@ export function FTPSettingsEditor({ onSettingsChange }: FTPSettingsEditorProps) 
         // ignore
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave = () => {
@@ -127,6 +128,7 @@ export function FTPSettingsEditor({ onSettingsChange }: FTPSettingsEditorProps) 
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function getFTPSettings(): FTPSettings {
   const saved = localStorage.getItem(FTP_SETTINGS_KEY);
   if (saved) {

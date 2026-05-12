@@ -28,6 +28,7 @@ export default function VideoPlayer() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSeeking, setIsSeeking] = useState(false);
+  const isSeekingRef = useRef(false);
 
   useEffect(() => {
     if (!videoUrl) {
@@ -91,7 +92,7 @@ export default function VideoPlayer() {
     if (!video) return;
 
     const handleTimeUpdate = () => {
-      if (!isSeeking) {
+      if (!isSeekingRef.current) {
         setCurrentTime(video.currentTime);
       }
     };
@@ -150,6 +151,7 @@ export default function VideoPlayer() {
   };
 
   const handleSeekStart = () => {
+    isSeekingRef.current = true;
     setIsSeeking(true);
   };
 
@@ -165,6 +167,7 @@ export default function VideoPlayer() {
     const input = e.target as HTMLInputElement;
     const value = parseFloat(input.value);
     video.currentTime = value;
+    isSeekingRef.current = false;
     setIsSeeking(false);
   };
 
