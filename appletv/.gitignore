@@ -1,0 +1,11 @@
+## User settings
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad/
+
+## Build output
+build/
+DerivedData/
+
+## macOS noise
+.DS_Store
