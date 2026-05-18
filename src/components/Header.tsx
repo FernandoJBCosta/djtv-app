@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { SearchModal } from "./SearchModal";
 import { Capacitor } from "@capacitor/core";
+import djtvLogo from "@/assets/djtv-logo.png";
 
 interface NavLink {
   href: string;
@@ -57,9 +58,13 @@ export function Header() {
     >
       <div className="container mx-auto px-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] md:px-8">
         <div className="flex items-center justify-between h-14 md:h-20">
-          {/* Empty space where logo was */}
-          <Link to="/" className="flex items-center">
-            <span className="sr-only">DJTV Home</span>
+          {/* Logo */}
+          <Link to="/" className="flex items-center" aria-label="DJTV Home">
+            <img
+              src={djtvLogo}
+              alt="DJTV"
+              className="h-10 md:h-14 w-auto drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]"
+            />
           </Link>
 
           {/* Desktop Navigation */}

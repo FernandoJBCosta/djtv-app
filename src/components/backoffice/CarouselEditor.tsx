@@ -146,7 +146,12 @@ export function CarouselEditor({ items, onChange }: CarouselEditorProps) {
                       src={item.src}
                       alt="Banner preview"
                       className="mt-1 w-full max-w-md h-auto rounded border"
-                      onError={(e) => (e.currentTarget.style.display = "none")}
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (!img.src.endsWith("/placeholder.png")) {
+                          img.src = "/placeholder.png";
+                        }
+                      }}
                     />
                   </div>
                 )}

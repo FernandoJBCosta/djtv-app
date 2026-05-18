@@ -216,7 +216,12 @@ export function CategoryEditor({ categories, onChange }: CategoryEditorProps) {
                                   src={video.thumbnail}
                                   alt="Thumbnail"
                                   className="mt-1 w-32 h-auto rounded border"
-                                  onError={(e) => (e.currentTarget.style.display = "none")}
+                                  onError={(e) => {
+                                    const img = e.currentTarget;
+                                    if (!img.src.endsWith("/placeholder.png")) {
+                                      img.src = "/placeholder.png";
+                                    }
+                                  }}
                                 />
                               </div>
                             )}

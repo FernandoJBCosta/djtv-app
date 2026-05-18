@@ -43,10 +43,16 @@ export function VideoCard({ video, onPlay, className, index = 0 }: VideoCardProp
       <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-card transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] group-hover:-translate-y-3">
         {/* Image */}
         <img
-          src={video.thumbnail}
+          src={video.thumbnail || "/placeholder.png"}
           alt={video.title}
           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
           loading="lazy"
+          onError={(e) => {
+            const img = e.currentTarget;
+            if (!img.src.endsWith("/placeholder.png")) {
+              img.src = "/placeholder.png";
+            }
+          }}
         />
         
         {/* Gradient Overlay */}
