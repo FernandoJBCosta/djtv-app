@@ -73,7 +73,7 @@ export default function Settings() {
               </a>
 
               <a
-                href="https://djtv.pt/terms"
+                href="https://djtv.pt/terms-of-service/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors"
