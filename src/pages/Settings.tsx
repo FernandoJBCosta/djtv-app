@@ -92,7 +92,7 @@ export default function Settings() {
             <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Follow Us</h2>
             <div className="bg-card rounded-xl border border-border overflow-hidden">
               <a
-                href="https://instagram.com/djtv.pt"
+                href="https://www.instagram.com/djtv_pt/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
