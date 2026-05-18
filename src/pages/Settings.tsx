@@ -60,7 +60,7 @@ export default function Settings() {
             <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-3">Legal</h2>
             <div className="bg-card rounded-xl border border-border overflow-hidden">
               <a
-                href="https://djtv.pt/privacy"
+                href="https://djtv.pt/privacy-policy/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-4 border-b border-border hover:bg-muted/50 transition-colors"
